@@ -1,0 +1,183 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+---
+title: "PC5: Estimation and R"
+author: ""
+date: "Octobre 5  2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# I Sampling random variables
+
+Sampling random variables is very useful in statistics. In this part, we learn to sample from different distributions using a generator of uniform $\mathcal{U}(0,1)$. Such a generator is the cornerstone of simulation algorithms and every computer has one. 
+
+In statistics, sampling is used in two contexts. First, simulations are used to check statistical methods before applying it to real data. It is a way to control what happens when you know the truth, i.e. the population. Second, some inference methods are based on simultaion for instance bootstrap methods, used in order to build confidence intervals, or MCMCs methods used to approximately sample from a posterior distribution.
+
+The three following exercises will help you understand how you can simulate various random variables 'runif' of R. They are for illustrative purposes only.
+In the future, use existing functions, such as rnorm, rexp, rpois, if they exist. This will prevent errors and speed up your code.
+
+
+### Exercise 1: Discrete distribution
+
+Let $p=(p_1, \dots, p_k)\in \Delta_k=\{ p\in [0,1]^k: ~ \sum_{i=1}^k p_i=1\}$ and $X$ is a discrete random variable such that $P(X=i)=p_i$ for all $i\leqslant k$. Let $P_p$ be the distribution of $X$.
+
+1. Propose an algorithm to sample one realization of $P_p$ using runif only.
+
+```{r}
+u <- runif(1,0,1)
+p <- c(0.2,0.5,0.3)
+x <- 1 + (u > p[1]) + (u > p[1] + p[2])
+x
+```
+
+2. Write a function sampling n realizations of i.i.d. random variables from $P_p$.
+
+```{r}
+fct = function (n,p) {
+  k <- length(p)
+  u <- runif(n,0,1)
+  x <- 1 ;
+  for (j in 1:(k-1)) {
+    x <- x + (u>sum(p[1:j]));
+  }
+  return(x)
+}
+
+fct(6,c(0.1,0.3,0.4,0.2))
+```
+
+3. How can you check that the algorithm is indeed sampling from $P_p$?
+
+```{r}
+library(tibble)
+realizations <- fct(10000, c(0.1,0.3,0.4,0.2))
+realizations <- as.factor(realizations);
+table <- table(realizations)
+table <- data.frame(table)
+table[,2] <- table[,2]/10000
+table
+
+library(ggplot2)
+ggplot(table) + 
+  aes(table[,1],table[,2]) + 
+  geom_col() + 
+  ggtitle("Samples from P for n = 10 000")
+
+```
+
+
+### Exercise 2: Simulations of random variables by inverting the cdf
+
+
+1. Let $F~:~(a, b) → (0,1)$ a one to one cdf with  $-\infty \leqslant a \leqslant b \leqslant +\infty$, and $U$ a random varible distributed from $\mathcal{U}(0,1)$. What is the distribution of $F^{-1}(U)$, where $F^{-1}$ is the inverse function of $F$?
+
+2. Propose an algorithm to sample from a Exponential distribution $\text{Exp}(\lambda)$ using a sampler of the uniform $\mathcal{U}(0,1)$.
+
+```{r}
+exp = function (n,lambda) {
+ u <- runif(n,0,1)
+z <- (-(log(1) - u)/lambda)
+return(z)
+}
+
+exp(5,1)
+```
+
+3. Propose an algorithm to sample from a Cauchy distribution using a sampler of the uniform $\mathcal{U}(0,1)$. The density function of a Cauchy distribution with parameters $x_0\in \mathbb{R}$ and $\gamma>0$ is
+\[
+x \in \mathbb{R} \mapsto \frac{1}{\pi \gamma} \frac{\gamma^2}{(x-x_0)^2+\gamma^2}
+.\]
+
+```{r}
+cauchy = function (a,b) {
+  u <- runif(1)
+  z <- a*tan(pi*(u-0.5)) + b
+  return(z)
+}
+
+cauchy(1,3)
+```
+
+
+### Exercise 3: Simulation of Gaussian random variables and vectors using Box-Muller
+
+1. Let $U$ and $V$ be two independed random variables distributed from the uniform distribution $\mathcal{U}(0,1)$. Let $R=-\ln(U)$, $Z_1=\sqrt{R}cos(2\pi V)$ and $Z_2= \sqrt{R} sin(2 \pi V)$. What is the distributions of $R$. What is the distribution of the random vector $(Z_1, Z_2)$.
+
+2. Deduce an algorithm to sample a realization of $(Z_1, Z_2)^T \sim \mathcal{N}((0,0)^T, Id_2)$ using a sampler of the uniform $\mathcal{U}(0,1)$.
+
+```{r}
+norm_id = function() {
+  u <- runif (1)
+  v <- runif(1)
+  r <- -log(u)
+  z <- c(sqrt(r)*cos(2*pi*v),sqrt(r)*sin(2*pi*v))
+  return(z)
+}
+
+norm_id()
+```
+
+3. Propose an algorithm to sample realizations of a Gaussian vector $Z \sim \mathcal{N}(m, \Sigma)$ where $m\in \mathbb{R}^n$ and $\Sigma$ is a positive symmetric matrix of size $n\times n$.
+ 
+```{r}
+
+norm <- function(A,m) {
+  z <- norm_id
+  Z <- Az + m
+  return (Z)
+}
+
+```
+
+Another class of algorithms is the rejection sampling. You can learn more on this method pages 92 and 93 of your reference book "Mathematical statistics and data analysis" by Rice.
+
+# II Estimation
+
+In this part, we are going to illustrate the properties of some estimators using Monte-Carlo algorithms.
+In Monte-Carlo algorithms the exectation $\mathbb{E}_{X\sim P}(f(X))$ is approximating via $\frac{1}{n}\sum_{i=1}^{n}f(x_i)$ where $(x_1, \dots, x_n)$ is a sample from $P$.
+
+### Exercise 4: Binomial distribution
+
+Let $Y$ be distributed from a Bernoulli distribution with parameter $p$ and let $X$ be distributed from a binomial distribution $\text{Bin}(n,p)$ with $p\in(0,1)$ and $n\in \mathbb{N}$.
+
+1. Sample one realization $y$ of $Y \sim \mathcal{B}(p)$ with $p=0.4$. Plot the likelihood associated to this observed value $y$ with respect to $p$. Plot the likelihood associated to $4$ other observed values in the same graph. What are the maximum likelihood estimates in the five cases?
+
+2. Sample one realization $x_1$ of $X \sim \text{Bin}(n,p)$ with $p=0.4$ and $n=20$. Plot the likelihood associated to this observed value $x$. Plot the likelihood associated to $4$ other observed values in the same graph. What are the maximum likelihood estimates in the five cases? In exercise 5 of PC3, 4, we obtained that the mle in this model is unique and equals $\hat{p}_{MLE}=X/n$.
+
+3. We consider a Uniform $\mathcal{U}(0,1)$ prior on $p$ in $(0,1)$. Plot the prior distribution and the posterior distribution associated to the realization $x_1$.   Plot the posterior distribution associated to $4$ other observed values obtained in the previous question in the same graph. What are the maximum a posteriori estimates in the five cases?
+In exercise 5 of PC3, 4, we obtained that the mle in this model is unique and equals $\hat{p}_{MAP}=\frac{X+1}{n+2}$.
+
+4. Compare the bias, variance and mse of the two previous estimators $\hat{p}_{MLE}$ and $\hat{p}_{MAP}$ thanks to simulations for $p\in\{0.4,0.95\}$ and $n\in\{10,20,50\}$. Help: you can use Monte-Carlo algorithms to approximate the variance and the bias. Also plot histograms of the obtained estimates.
+
+### Exercise 5: Gaussian distribution
+
+Let $X_1, \dots, X_n$ be i.i.d. random variables distributed from $\mathcal{N}(m, 1)$. Fix $n=100$ and $m=2$.
+
+1.  Sample a realization $(x_1, \dots, x_n)$ of the vector $(X_1, \dots, X_n)$. Plot the likelihood asoociated to this sample with respect to $m$.
+
+2. We consider a  Gaussian prior $\Pi=\mathcal{N}(1,1)$ on $m$. Plot the prior distribution and the posterior distributions associated to $\Pi(\cdot | x_1)$, $\Pi(\cdot | x_1, x_2)$, $\Pi(\cdot | x_1, \dots, x_{10})$ and $\Pi(\cdot | x_1, \dots, x_n)$. 
+
+3. We consider the following estimators $\hat{m}_1=X_1$, $\hat{m}_2=\frac{1}{3}(X_1+X_2+X_3)$, $\hat{m}_3=\frac{1}{n}\sum_{i=1}^n X_i$, $\hat{m}_4=\frac{\hat{m}_3+1/n}{1+1/n}$ and $\hat{m}_5=\hat{m}_3+\frac{10}{n}$. Give the bias and variance of these five estimators. Sample $1000$ samples $(x_1, \dots, x_{100})$ and plot histograms of the five associated estimates. 
+
+### Exercise 6: Exponential distribution
+
+Let $X_1, \dots, X_n$ be i.i.d. random variables distributed from $\text{Exp}(\lambda)$. In exercise 1 of PC3,4, we have obtained the following estimators using the method of moments:
+\[
+\hat{\lambda}_1=\frac{n}{\sum_{i=1}^{n}X_i}
+, \quad
+\hat{\lambda}_2=\sqrt{\frac{2}{\frac{1}{n}\sum_{i=1}^{n}X_i^2}}
+\quad \text{and} \quad
+\hat{\lambda}_{3,t_0}=\frac{\log\left(\frac{1}{n}\sum_{i=1}^{n}1_{(t_O,+\infty)}(X_i)\right)}{t_0}.
+\]
+
+1. Compare these estimators thanks to simulations.
+
+
+
