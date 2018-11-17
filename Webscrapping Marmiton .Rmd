@@ -13,6 +13,7 @@ install.packages("rvest")
 library(rvest)
 library(dplyr)
 library(tidyverse)
+library(magrittr)
 ```
 
 ```{r}
@@ -78,6 +79,8 @@ receipe_df <- receipe_df %>% filter(Ingredients != "No more ingredient")
 ```
 
 
+### Second part
+
 ```{r}
 links <- webpage %>%
   html_nodes('.recipe-card-link') %>% 
@@ -86,7 +89,18 @@ links <- webpage %>%
 
 ```{r}
 fetch_recipe_detail <- function(url) {
-  html <- read_html(url)
+  html <- read_html(url) 
+  ingredients <- html_nodes(html, ".recipe-ingredients__list__item") %>% 
+    map(function(node) {
+        paste0(html_text(html_node(node, '.recipe-ingredient-qt')), html_text(html_node(node, '.ingredient')))
+    })
+  
+  title <- html_text(html_node(html, '.main-title'))
+  data.frame(Title = rep(title, times = length(ingredients)), Ingredient=ingredients)
 }
+```
+
+```{r}
+df <- links %>% map(fetch_recipe_detail)
 ```
 
