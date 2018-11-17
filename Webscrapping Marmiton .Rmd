@@ -22,6 +22,7 @@ webpage <- read_html(url_titres_recettes)
 
 ```{r}
 #Using CSS selector to scrap the rankings section : 
+
 rank_data_html <- html_nodes(webpage,'.recipe-card__rank')
 
 #Converting the ranking data to text
@@ -76,4 +77,16 @@ receipe_df <- receipe_df %>% filter(Ingredients != "No more ingredient")
 
 ```
 
+
+```{r}
+links <- webpage %>%
+  html_nodes('.recipe-card-link') %>% 
+  map(function(node) { html_attr(node, 'href') })
+```
+
+```{r}
+fetch_recipe_detail <- function(url) {
+  html <- read_html(url)
+}
+```
 
