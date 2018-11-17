@@ -1,0 +1,79 @@
+---
+title: "Webscrapping Marmiton"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+install.packages("rvest")
+
+library(rvest)
+library(dplyr)
+library(tidyverse)
+```
+
+```{r}
+url_titres_recettes <- 'https://www.marmiton.org/recettes/top-internautes-plat-principal.aspx'
+webpage <- read_html(url_titres_recettes)
+```
+
+```{r}
+#Using CSS selector to scrap the rankings section : 
+rank_data_html <- html_nodes(webpage,'.recipe-card__rank')
+
+#Converting the ranking data to text
+rank_data <- html_text(rank_data_html)
+
+#Let's have a look at the rankings
+head(rank_data)
+rank_data
+
+```
+
+```{r}
+title_data_html <- html_nodes(webpage,'.recipe-card__title')
+title_data <- html_text(title_data_html)
+head(title_data)
+```
+
+```{r}
+receipes <- as.vector(title_data)
+```
+
+
+```{r}
+url_receipes <- c("https://www.marmiton.org/recettes/recette_blanquette-de-veau-facile_19219.aspx", 'https://www.marmiton.org/recettes/recette_filet-mignon-en-croute_14407.aspx', "https://www.marmiton.org/recettes/recette_lasagnes-a-la-bolognaise_18215.aspx", "https://www.marmiton.org/recettes/recette_saute-de-veau-au-chorizo_17027.aspx", "https://www.marmiton.org/recettes/recette_boeuf-bourguignon-rapide_19218.aspx", "https://www.marmiton.org/recettes/recette_hachis-parmentier_17639.aspx", "https://www.marmiton.org/recettes/recette_pate-brisee-vite-faite_31639.aspx", "https://www.marmiton.org/recettes/recette_amour-de-saumon-en-papillote_21494.aspx", "https://www.marmiton.org/recettes/recette_poulet-a-la-moutarde-a-l-estragon-et-aux-champignons_19374.aspx", "https://www.marmiton.org/recettes/recette_filet-mignon-de-porc-au-maroilles_12734.aspx")
+
+ing <- lapply(1:10, function(i) html_text(html_nodes(read_html(url_receipes[i]), ".ingredient")))
+
+prep <- lapply(1:10, function(i) html_text(html_nodes(read_html(url_receipes[i]), ".recipe-preparation__list__item")))
+```
+
+
+```{r}
+size_ing <- sapply(1:10, function(i) length(ing[[i]]))
+size_prep <- sapply(1:10, function(i) length(prep[[i]]))
+MAX <- max(max(size_ing), max(size_prep))
+
+for (i in 1:10){
+  if (length(ing[[i]]) <= MAX){
+    ing[[i]][MAX] <- "No more ingredient"
+  }
+  if (length(prep[[i]]) <= MAX){
+    prep[[i]][MAX] <- "No more ingredient"
+  }
+}
+
+receipe_df <- as.data.frame(ing)
+colnames(receipe_df) <- receipes[1:10]
+
+receipe_df <- receipe_df %>% gather(key = Title, value = Ingredients, 1:10)
+receipe_df <- receipe_df %>% filter(Ingredients != is.na(Ingredients))
+receipe_df <- receipe_df %>% filter(Ingredients != "No more ingredient")
+
+```
+
+

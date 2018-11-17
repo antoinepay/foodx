@@ -7,3 +7,5 @@ library(readr)
 source('repository.R')
 
 fetch_data_from_openfoodfacts(force_download = FALSE)
+
+food <- read_csv("data/food.csv")
