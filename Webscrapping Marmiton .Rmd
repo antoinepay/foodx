@@ -93,14 +93,14 @@ fetch_recipe_detail <- function(url) {
   ingredients <- html_nodes(html, ".recipe-ingredients__list__item") %>% 
     map(function(node) {
         paste0(html_text(html_node(node, '.recipe-ingredient-qt')), html_text(html_node(node, '.ingredient')))
-    })
-  
+    }) %>% 
+  simplify()
   title <- html_text(html_node(html, '.main-title'))
-  data.frame(Title = rep(title, times = length(ingredients)), Ingredient=ingredients)
+  data.frame(Title = rep(c(title), times = length(ingredients)), Ingredient=ingredients, stringsAsFactors = F)
 }
 ```
 
 ```{r}
-df <- links %>% map(fetch_recipe_detail)
+df <- links %>% map(fetch_recipe_detail) %>% bind_rows()
 ```
 
