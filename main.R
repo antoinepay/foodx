@@ -6,6 +6,4 @@ library(readr)
 # Fetching and loading data
 source('repository.R')
 
-fetch_data_from_openfoodfacts(force_download = FALSE)
-
-food <- read_csv("data/food.csv")
+food <- fetch_data_from_openfoodfacts(force_download = F)
