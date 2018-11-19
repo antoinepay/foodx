@@ -1,5 +1,5 @@
 url_titres_recettes <- 'https://www.marmiton.org/recettes/top-internautes-plat-principal.aspx'
-
+output_marmiton_top_1OO <- 'data/marmiton_100.csv'
 
 #' Fetch recipe details
 #'
@@ -35,6 +35,7 @@ fetch_recipe_detail <- function(url) {
 #' @export
 #'
 fetch_top_100_recipes <- function() {
+  
   webpage <- read_html(url_titres_recettes)
   
   links <- webpage %>%
@@ -44,5 +45,40 @@ fetch_top_100_recipes <- function() {
   df <- links %>%
     map(fetch_recipe_detail) %>% 
     bind_rows() %>% 
-    write_csv('data/marmition_100.csv')
+    write_csv(output_marmiton_top_1OO)
+  
+  output_filepath
 }
+
+#' Return Top 100 recipes links of Marmiton website
+#'
+#' @import dplyr
+#' @importFrom rvest html_attr html_nodes
+#' @importFrom purrr map 
+#' @importFrom xml2 read_html
+#' @export
+#' @return data.frame
+#'
+get_top_100_links  <- function() {
+  webpage <- read_html(url_titres_recettes)
+  
+  webpage %>%
+    html_nodes('.recipe-card-link') %>% 
+    map(function(node) { html_attr(node, 'href') })
+}
+
+#' Title
+#'
+#' @param df data.frame
+#'
+#' @return character
+#' @export
+#'
+gather_recipes_to_csv <- function(df) {
+  df <-  bind_rows() %>% 
+    write_csv(output_marmiton_top_1OO)
+  
+  output_marmiton_top_1OO
+}
+
+

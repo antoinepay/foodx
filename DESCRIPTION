@@ -14,5 +14,6 @@ Imports:
     readr,
     rvest,
     purrr,
-    xml2
+    xml2,
+    shiny
 RoxygenNote: 6.1.1
