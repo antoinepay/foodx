@@ -1,0 +1,14 @@
+^devstuffs\.R$
+^LICENSE\.md$
+^.*\.Rproj$
+^\.Rproj\.user$
+^README\.Rmd$
+^README-.*\.png$
+.travis.yml
+^CONDUCT\.md$
+^data-raw$
+^cran-comments\.md$
+paper\..*
+^revdep$
+^docs$
+data/food.csv
