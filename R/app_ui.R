@@ -15,33 +15,33 @@ app_ui <- function() {
     
     sidebarPanel(
       selectInput(
-        "Ingredient 1", 
-        label = "Ingredient 1", choices = ingredients_list(recipe_path), value = "carotte"
+        "Ingredient1", 
+        label = "Ingredient 1", choices = c()
       ),
-      textInput(
-        "Ingredient 2", 
-        label = "Ingredient 2", choices = ingredients_list(recipe_path), value = "poulet"
+      selectInput(
+        "Ingredient2", 
+        label = "Ingredient 2", choices = c()
       ),
-      textInput(
-        "Ingredient 3", 
-        label = "Ingredient 3", choices = ingredients_list(recipe_path), value = "champignons"
+      selectInput(
+        "Ingredient3", 
+        label = "Ingredient 3", choices = c()
       ), 
-      textInput(
-        "Ingredient 4", 
-        label = "Ingredient 4", choices = ingredients_list(recipe_path), value = "persil"
+      selectInput(
+        "Ingredient4", 
+        label = "Ingredient 4", choices = c()
       ),
-      textInput(
-        "Ingredient 5", 
-        label = "Ingredient 5", choices = ingredients_list(recipe_path), value = "abricots"
+      selectInput(
+        "Ingredient5", 
+        label = "Ingredient 5", choices = c()
       ),
       sliderInput(
-        "Time Cooking", "How long do you want to cook ?", 
+        "Time Cooking", "Combien de temps souhaitez-vous cuisiner ?", 
         min = 0, max = 180, value = c(15,20), animate = TRUE, step = 1
       )
     ),
     
     mainPanel(
-      tableOutput('recipes')
+      tableOutput('Recipes')
     )
   )
 }

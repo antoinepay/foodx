@@ -14,19 +14,31 @@
 #' @importFrom stats rnorm
 #' @export app_server
 #'
-app_server <- function(input, output,session) {
+app_server <- function(input, output, session) {
   
-  ingredients_list <- function(path){
-    recipe_data <- read.csv(path)
-    recipe_data_wide <- recipe_data %>% 
-      unnest_tokens(ingredient, recipeIngredients,token = 'regex', pattern=",") %>% 
-      mutate(ingredient = gsub("-"," ",ingredient))
-    
-    all_ingredients <- unique(recipe_data_wide$ingredient)
-    return(all_ingredients)
-  }
+  #ingredients <- ingredients_list(paste0("../../",foodX::recipe_path))
   
-  output$recipes <- renderTable({
+  observe({
+    updateSelectInput(session = session, inputId = "Ingredient1", choices = ingredients_list(paste0("../../",foodX::recipe_path)))
+  })
+  
+  observe({
+  updateSelectInput(session = session, inputId = "Ingredient2", choices = ingredients_list(paste0("../../",foodX::recipe_path)))
+  })
+   
+  observe({
+  updateSelectInput(session = session, inputId = "Ingredient3", choices = ingredients_list(paste0("../../",foodX::recipe_path)))
+  })
+   
+  observe({
+  updateSelectInput(session = session, inputId = "Ingredient4", choices = ingredients_list(paste0("../../",foodX::recipe_path)))
+  })
+   
+  observe({
+  updateSelectInput(session = session, inputId = "Ingredient5", choices = ingredients_list(paste0("../../",foodX::recipe_path)))
+  })
+
+  output$Recipes <- renderTable({
     
     marmiton_top_100 <- paste0('../../', foodX::output_marmiton_top_1OO)
     
