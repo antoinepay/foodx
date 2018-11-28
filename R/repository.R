@@ -23,7 +23,15 @@ fetch_data_from_openfoodfacts <- function() {
     'image_ingredients_url',
     'image_ingredients_small_url',
     'image_nutrition_small_url',
-    'image_nutrition_url'
+    'image_nutrition_url',"traces_tags",                                
+    "traces_fr",                                  
+    "serving_size",                               
+    "traces",                                     
+    "emb_codes",                                  
+    "emb_codes_tags", 
+    "cities_tags",
+    "origins",
+    "origins_tags"
   )
   
   food <- food %>% 
