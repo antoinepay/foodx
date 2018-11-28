@@ -15,6 +15,3 @@ data.frame
 \description{
 Fetch recipe details
 }
-\examples{
-fetch_recipe_detail('https://www.marmiton.org/recettes/recette_blanquette-de-veau-facile_19219.aspx')
-}

@@ -1,3 +1,5 @@
+^data/food\.csv$
+^data/recipe_data\.csv$
 ^devstuffs\.R$
 ^LICENSE\.md$
 ^.*\.Rproj$
@@ -11,4 +13,3 @@
 paper\..*
 ^revdep$
 ^docs$
-data/food.csv

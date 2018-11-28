@@ -48,8 +48,39 @@ fetch_data_from_openfoodfacts <- function() {
   )
   
   food <- food %>% 
-    filter(nchar(code) == 13 & !is.na(product_name)) %>% 
-    select(-columns_to_remove)
+    filter(nchar(code) == 13 & !is.na(product_name)) %>%
+    select(-columns_to_remove) %>%
+    select(which(colMeans(is.na(.)) < 0.8)) %>%
+    filter(countries_tags=="en:france") %>% 
+    filter_categories()
   
   write_csv(food, food_csv_filepath)
+}
+
+#' Get the best category of the product
+#'
+#' @param food_dataset data.frame from OpenFoodFacts 
+#'
+#' @return filtered categories dataset
+#' @export
+#'
+filter_categories <- function(food_dataset) {
+  food_dataset %>%  
+    rowwise() %>% 
+    mutate(
+      categories = get_last_category(categories),
+      categories_tags = get_last_category(categories_tags),
+      categories_fr = get_last_category(categories_fr)
+      )
+}
+
+#' Split and get the last one 
+#'
+#' @param categories character with many categories separated by comma
+#'
+#' @return category
+#'
+get_last_category <- function(categories) {
+  c <- strsplit(categories, ",")[[1]]
+  c[[length(c)]]
 }
