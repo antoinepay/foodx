@@ -12,7 +12,6 @@ output_marmiton_top_1OO <- 'data/marmiton_100.csv'
 #' @importFrom xml2 read_html
 #' @export
 #'
-#' @examples fetch_recipe_detail('https://www.marmiton.org/recettes/recette_blanquette-de-veau-facile_19219.aspx')
 fetch_recipe_detail <- function(url) {
   html <- read_html(url) 
   ingredients <- html_nodes(html, ".recipe-ingredients__list__item") %>% 
