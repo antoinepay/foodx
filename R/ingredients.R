@@ -15,5 +15,3 @@ ingredients_list <- function(path){
   all_ingredients <- unique(recipe_data_wide$ingredient)
   all_ingredients
 }
-
-ingredients_list(recipe_path)
