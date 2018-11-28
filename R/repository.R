@@ -31,7 +31,20 @@ fetch_data_from_openfoodfacts <- function() {
     "emb_codes_tags", 
     "cities_tags",
     "origins",
-    "origins_tags"
+    "origins_tags",
+    "created_t",
+    "last_modified_t",
+    "packaging",
+    "packaging_tags",
+    "manufacturing_places",
+    "manufacturing_places_tags",
+    "first_packaging_code_geo",
+    "purchase_places","stores",
+    "image_url",
+    "image_ingredients_url",
+    "image_ingredients_small_url", 
+    "image_nutrition_url",
+    "image_nutrition_small_url"
   )
   
   food <- food %>% 
