@@ -50,8 +50,8 @@ fetch_data_from_openfoodfacts <- function() {
   food <- food %>% 
     filter(nchar(code) == 13 & !is.na(product_name)) %>%
     select(-columns_to_remove) %>%
-    select(which(colMeans(is.na(.)) < 0.8)) %>%
     filter(countries_tags=="en:france") %>% 
+    select(which(colMeans(is.na(.)) < 0.8)) %>%
     filter_categories()
   
   write_csv(food, food_csv_filepath)
