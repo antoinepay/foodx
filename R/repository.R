@@ -68,9 +68,9 @@ filter_categories <- function(food_dataset) {
   food_dataset %>%  
     rowwise() %>% 
     mutate(
-      categories = get_last_category(categories),
-      categories_tags = get_last_category(categories_tags),
-      categories_fr = get_last_category(categories_fr)
+      categories = get_last_category(as.character(categories)),
+      categories_tags = get_last_category(as.character(categories_tags)),
+      categories_fr = get_last_category(as.character(categories_fr))
       )
 }
 
