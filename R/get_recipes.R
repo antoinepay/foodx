@@ -30,7 +30,7 @@ get_ingredient_you_always_have<-function(){
   ingredients_you_always_have<-c("sucre","sel","beurre","poivre","huile-d-olive")
 }
 
-
+ingredients_you_always_have<-get_ingredient_you_always_have()
 
 #' Obtained from stackoverflow, a quick way to obtain all the subsets given a set
 #'
