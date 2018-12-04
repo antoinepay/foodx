@@ -1,5 +1,5 @@
-#import dplyr
-#import purrr
+#' @import dplyr
+#' @import purrr
 
 #Sys.setlocale(locale="en_us.UTF-8")
 
