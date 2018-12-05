@@ -11,12 +11,17 @@
 #'
 #' @examples
 get_list_of_unique<-function(){
-  foo <- data.frame(do.call('cbind', strsplit(as.character(marmiton_recipes$recipeIngredients),',',fixed=TRUE)))
-  list_of_unique<-lapply(foo,unique)
+  list_of_unique <- strsplit(as.character(marmiton_recipes$recipeIngredients),',',fixed=TRUE)
+  list_of_unique <-lapply(list_of_unique, remove_ingredients_you_always_have)
   list_of_unique
 }
 
 list_of_unique<-get_list_of_unique()
+
+remove_ingredients_you_always_have <- function(list){
+  list<-list[! (list %in% ingredients_you_always_have)]
+  list
+}
 
 
 #' Temporary function, enables us to include or not
@@ -27,7 +32,7 @@ list_of_unique<-get_list_of_unique()
 #'
 #' @examples
 get_ingredient_you_always_have<-function(){
-  ingredients_you_always_have<-c("sucre","sel","beurre","poivre","huile-d-olive")
+  ingredients_you_always_have<-c("sucre","sel","beurre","poivre","huile-d-olive", "huile")
 }
 
 ingredients_you_always_have<-get_ingredient_you_always_have()
