@@ -3,6 +3,24 @@
 
 #Sys.setlocale(locale="en_us.UTF-8")
 
+#' Temporary function, enables us to include or not
+#' all usual ingredients in the set of ingredients we will give to the machine
+#'
+#' @return
+#' @export
+#'
+#' @examples
+get_ingredient_you_always_have<-function(){
+  ingredients_you_always_have<-c("sucre","sel","beurre","poivre","huile-d-olive", "huile")
+}
+
+ingredients_you_always_have<-get_ingredient_you_always_have()
+
+remove_ingredients_you_always_have <- function(list){
+  list<-list[! (list %in% ingredients_you_always_have)]
+  list
+}
+
 #' Give a list of 1538 lists (number of recipes)
 #' Within each list, there is the ingredients of the receipe
 #' 
@@ -18,24 +36,6 @@ get_list_of_unique<-function(){
 
 list_of_unique<-get_list_of_unique()
 
-remove_ingredients_you_always_have <- function(list){
-  list<-list[! (list %in% ingredients_you_always_have)]
-  list
-}
-
-
-#' Temporary function, enables us to include or not
-#' all usual ingredients in the set of ingredients we will give to the machine
-#'
-#' @return
-#' @export
-#'
-#' @examples
-get_ingredient_you_always_have<-function(){
-  ingredients_you_always_have<-c("sucre","sel","beurre","poivre","huile-d-olive", "huile")
-}
-
-ingredients_you_always_have<-get_ingredient_you_always_have()
 
 #' Obtained from stackoverflow, a quick way to obtain all the subsets given a set
 #'
@@ -155,13 +155,8 @@ get.matrix.subset.containance<-function(all.subset){
 preprocess.set.in.subset<-function(
   set,
   minimum_to_use,
-  usual.ing,
   must_include
 ){
-  
-  if (usual.ing==T){
-    set<-c(ingredients_you_always_have,set)
-  }
   all.subset<-all.subsets.fast(set)
   if (must_include!="nothing_bro"){
     all.subset<-all.subset[sapply(all.subset, is.contained,vec1=must_include)]}
@@ -210,16 +205,15 @@ get_position_of_future_empty<-function(matrix,i){
 #'
 #' @param set 
 #' @param minimum_to_use 
-#' @param with_usual_ingredients 
 #' @param must_include 
 #'
 #' @return
 #' @export
 #'
 #' @examples
-get_number_of_each_combinations<-function(set,minimum_to_use,with_usual_ingredients,must_include){
+get_number_of_each_combinations<-function(set,minimum_to_use,must_include){
   
-  all.subset<-preprocess.set.in.subset(set,minimum_to_use,with_usual_ingredients,must_include)
+  all.subset<-preprocess.set.in.subset(set,minimum_to_use,must_include)
   
   a<-rep(0,length(all.subset))
   
@@ -290,7 +284,6 @@ get_nb_best_combinations<-function(all.subset,percentage){
 #' @param ingredients_to_use Set of ingredients
 #' @param proportion_of_recipe 
 #' @param minimum_ingredients_to_use 
-#' @param with_usual_ingredients 
 #' @param must_include 
 #'
 #' @return List of recipes
@@ -301,7 +294,6 @@ get_best_recipes_du_chef <- function(
   ingredients_to_use, 
   proportion_of_recipe, 
   minimum_ingredients_to_use, 
-  with_usual_ingredients = F,
   must_include
 ){
   
@@ -311,7 +303,7 @@ get_best_recipes_du_chef <- function(
   best_combinations <- try(get_number_of_each_combinations(
     ingredients_to_use, 
     new_minimum_to_use,
-    with_usual_ingredients,
+    
     must_include) %>% 
       get_best_combinations() %>% 
       get_nb_best_combinations(proportion_of_recipe),silent = T)
@@ -324,7 +316,7 @@ get_best_recipes_du_chef <- function(
     best_combinations <- try(get_number_of_each_combinations(
       ingredients_to_use, 
       new_minimum_to_use,
-      with_usual_ingredients,
+      
       must_include) %>% 
         get_best_combinations() %>% 
         get_nb_best_combinations(proportion_of_recipe),silent = T)
@@ -352,7 +344,6 @@ get_best_recipes_du_chef <- function(
 #' and returns the corresponding receipies
 #'
 #' @param ingredients_to_use 
-#' @param with_usual_ingredients 
 #' @param must_include 
 #'
 #' @return list of recipes 
@@ -361,13 +352,12 @@ get_best_recipes_du_chef <- function(
 #' @examples
 get_best_receipe_using_most_ingredients<-function(
   ingredients_to_use, 
-  with_usual_ingredients = F,
   must_include
 ){
   best_combinations <- get_number_of_each_combinations(
     ingredients_to_use,
     minimum_to_use=0,
-    with_usual_ingredients,
+    
     must_include) %>% 
     get_best_combinations() %>% 
     get_nb_best_combinations(0)
@@ -391,7 +381,6 @@ get_best_receipe_using_most_ingredients<-function(
 #' 
 #' @param ingredients_to_use 
 #' @param minimum_ingredients_to_use 
-#' @param with_usual_ingredients 
 #' @param must_include 
 #'
 #' @return list of recipes
@@ -401,7 +390,6 @@ get_best_receipe_using_most_ingredients<-function(
 get_receipe_with_least_ingredients_to_add<-function(
   ingredients_to_use, 
   minimum_ingredients_to_use, 
-  with_usual_ingredients = F,
   must_include
 ){
   
@@ -410,7 +398,6 @@ get_receipe_with_least_ingredients_to_add<-function(
   best_combinations <- get_number_of_each_combinations(
     ingredients_to_use, 
     new_minimum_to_use,
-    with_usual_ingredients,
     must_include) %>% 
     get_best_combinations() 
   
@@ -421,7 +408,6 @@ get_receipe_with_least_ingredients_to_add<-function(
     best_combinations <- get_number_of_each_combinations(
       ingredients_to_use, 
       new_minimum_to_use,
-      with_usual_ingredients,
       must_include) %>% 
       get_best_combinations()
   }
@@ -458,7 +444,6 @@ get_receipe_with_least_ingredients_to_add<-function(
 #' @param ingredients_to_use 
 #' @param proportion_of_recipe 
 #' @param minimum_ingredients_to_use 
-#' @param with_usual_ingredients 
 #' @param must_include 
 #'
 #' @return
@@ -469,25 +454,21 @@ get_best_recipies<-function(
   ingredients_to_use, 
   proportion_of_recipe=30, 
   minimum_ingredients_to_use=0, 
-  with_usual_ingredients = F,
   must_include="nothing_bro"){
   
   recipe_of_the_chef<-get_best_recipes_du_chef(
     ingredients_to_use, 
     proportion_of_recipe, 
     minimum_ingredients_to_use, 
-    with_usual_ingredients,
     must_include)
   
   recipe_using_most_ingedrient<-get_best_receipe_using_most_ingredients(
     ingredients_to_use, 
-    with_usual_ingredients,
     must_include)
   
   recipe_adding_least_ingredients<-get_receipe_with_least_ingredients_to_add(
     ingredients_to_use, 
     minimum_ingredients_to_use, 
-    with_usual_ingredients,
     must_include)
   
   
