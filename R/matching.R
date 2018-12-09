@@ -1,3 +1,25 @@
+#' Creates a matching column for the OpenFoodData set with Marmiton generic ingredients
+#'
+#' @import dplyr
+#' @param df food dataset from OpenFoodData
+#'
+#' @return data.frame
+#' @export
+#'
+match_open_food_data_to_marmiton_ingredients <- function(df) {
+  ingredients <- ingredients_list()$ingredient
+  df %>% 
+    split_columns_to_match %>% 
+    match_list_column_to_ingredients(ingredients, product_name_words, product_name_matches) %>% 
+    match_list_column_to_ingredients(ingredients, categories_words, categories_matches) %>% 
+    match_list_column_to_ingredients(ingredients, categories_fr_words, categories_fr_matches) %>% 
+    concat_matches(product_name_matches, categories_matches, categories_fr_matches) %>% 
+    select(-ends_with('_matches')) %>% 
+    select(-ends_with('_words')) %>% 
+    unnest(matches)
+}
+
+
 #' Splits mutliple columns into list columns for possible matching 
 #' 
 #' @import dplyr
