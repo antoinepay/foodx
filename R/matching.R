@@ -1,81 +1,72 @@
-#' Create a dataframe that splits up the product name
+#' Splits mutliple columns into list columns for possible matching 
+#' 
+#' @import dplyr
+#' @param df data.frame with strings
+#'
+#' @return data.frame
+#' @export
+#'
+split_columns_to_match <- function(df) {
+  df %>% 
+    split_column_words_to_new_col(product_name, product_name_words) %>% 
+    split_column_words_to_new_col(categories, categories_words) %>%
+    split_column_words_to_new_col(categories_fr, categories_fr_words)
+}
+
+
+#' Create a dataframe that splits up the words of column_name to words_column_name
 #'
 #' @param df 
 #' @param col 
 #' 
+#' @import dplyr
 #' @importFrom purrr map keep
 #'
 #' @return data.frame
 #' @export
-prepare_df <- function(df, col_name) {
-  col_name <- enquo(col_name)
-  df <- df %>% 
+split_column_words_to_new_col <- function(df, column_name, words_column_name) {
+  words_column_name <- enquo(words_column_name)
+  column_name <- enquo(column_name)
+  df %>% 
     as_tibble() %>% 
-    mutate(product_name_words = strsplit(tolower(!!col_name), "[\\ \\' \\,]"))
-  
-  df$product_name_words <- map(df$product_name_words, function(words) {
-    keep(words, function(word) nchar(word) >= 3)
-  })
-  
-  df
+    mutate(!!words_column_name := strsplit(tolower(!!column_name), "[\\ \\' \\,]"),
+           !!words_column_name := map(!!words_column_name, function(words) {
+              keep(words, ~ nchar(.) >= 3)
+             })
+          )
 }
 
-#' Insert columns in df created above with the matches between each column of the df above and the ingredient list
+#' Match list_column words with marmiton ingredients list
+#' Create a matches_column
 #'
+#' @import dplyr
+#' @importFrom purrr map
 #' @param df 
 #' @param ingredient_vector 
 #'
-#' @return
+#' @return data.frame
 #' @export
 #'
-build_df <- function(df, ingredient_vector) {
-  
+match_list_column_to_ingredients <- function(df, ingredient_vector, list_column, matches_column) {
+  list_column <- enquo(list_column)
+  matches_column <- enquo(matches_column)
+  df %>% mutate(!!matches_column := map(!!list_column, intersect, ingredient_vector))
+}
+
+#' Concat matches by unioning list columns
+#'
+#' @import dplyr
+#' @importFrom purrr pmap reduce map
+#' @param df 
+#' @param ... matches column names
+#' 
+#'
+#' @return data.frame with list of ingredient matches
+#' @export
+#'
+concat_matches <- function(df, ...) {
+  matches_columns <- quos(...)
   df %>% 
-    mutate(matches = map(product_name_words, function(words) {
-      words %in% ingredient_vector 
-    }))
+    mutate(matches = pmap(df %>% select(!!!matches_columns), ~ reduce(., union, .init = c()))) %>% 
+    filter(matches %>% map(length) > 0)
 }
-
-
-
-
-# Working on bulding the decision rule that chooses which word to use to replace the product name, needs more exploration
-
-
-#' Decision rule to choose which ingredient to use to replace the product name
-#'
-#' @return
-#' @export
-#'
-replace <- function(){
-  replaced_product_name <- ifelse(match1 != is.na(), match1, ifelse(match2 != is.na(), match2, match_last))
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -1,3 +1,4 @@
+^data/food_with_matches\.csv$
 ^data/food\.csv$
 ^data/recipe_data\.csv$
 ^devstuffs\.R$
