@@ -10,6 +10,7 @@ ingredients_list <- function(){
   marmiton_recipes %>% 
     unnest_tokens(ingredient, recipeIngredients, token = 'regex', pattern=",") %>% 
     mutate(ingredient = gsub("-"," ",ingredient)) %>% 
+    mutate(ingredient = tolower(ingredient))
     distinct(ingredient) %>%
     as.vector()
 }
