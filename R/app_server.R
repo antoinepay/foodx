@@ -22,8 +22,20 @@ app_server <- function(input, output, session) {
   first_recipe <- eventReactive(input$button, {
     req(input$Ingredients)
     #browser()
-   titles <- get_best_recipies(input$Ingredients)$recipe_of_the_chef %>% select(2)
-   urls <- get_best_recipies(input$Ingredients)$recipe_of_the_chef %>% select(1)
+    if (is.null(input$filters)){
+      tibble <- get_best_recipies(input$Ingredients)$recipe_of_the_chef
+    }
+    else if (input$filters == "Le plus rapide"){
+    tibble <- get_best_recipies(input$Ingredients)$recipe_of_the_chef %>% sort_time()
+    }
+    else if (input$filters == "Le moins cher"){
+    tibble <- get_best_recipies(input$Ingredients)$recipe_of_the_chef %>% sort_budget()
+    } 
+    else if (input$filters == "Le moins cher"){
+      tibble <- get_best_recipies(input$Ingredients)$recipe_of_the_chef %>% sort_difficulty()
+    } 
+   titles <- tibble %>% select(2)
+   urls <- tibble %>% select(1)
    vec <- map2_chr(titles$recipeTitle, urls$URL, ~as.character(a(.x, href = .y)))
    paste(vec, collapse = "<br/>")
   }, ignoreInit = TRUE)
@@ -33,6 +45,18 @@ app_server <- function(input, output, session) {
   second_recipe <- eventReactive(input$button, {
     req(input$Ingredients)
     #browser()
+    if (is.null(input$filters)){
+      tibble <- get_best_recipies(input$Ingredients)$recipe_using_most_ingedrient
+    }
+    else if (input$filters == "Le plus rapide"){
+      tibble <- get_best_recipies(input$Ingredients)$recipe_using_most_ingedrient %>% sort_time()
+    }
+    else if (input$filters == "Le moins cher"){
+      tibble <- get_best_recipies(input$Ingredients)$recipe_using_most_ingedrient %>% sort_budget()
+    } 
+    else if (input$filters == "Le moins cher"){
+      tibble <- get_best_recipies(input$Ingredients)$recipe_using_most_ingedrient %>% sort_difficulty()
+    } 
     titles <- get_best_recipies(input$Ingredients)$recipe_using_most_ingedrient %>% select(2)
     urls <- get_best_recipies(input$Ingredients)$recipe_using_most_ingedrient %>% select(1)
     vec <- map2_chr(titles$recipeTitle, urls$URL, ~as.character(a(.x, href = .y)))
@@ -44,6 +68,18 @@ app_server <- function(input, output, session) {
   third_recipe <- eventReactive(input$button, {
     req(input$Ingredients)
     #browser()
+    if (is.null(input$filters)){
+      tibble <- get_best_recipies(input$Ingredients)$recipe_adding_least_ingredients
+    }
+    else if (input$filters == "Le plus rapide"){
+      tibble <- get_best_recipies(input$Ingredients)$recipe_adding_least_ingredients %>% sort_time()
+    }
+    else if (input$filters == "Le moins cher"){
+      tibble <- get_best_recipies(input$Ingredients)$recipe_adding_least_ingredients %>% sort_budget()
+    } 
+    else if (input$filters == "Le moins cher"){
+      tibble <- get_best_recipies(input$Ingredients)$recipe_adding_least_ingredients %>% sort_difficulty()
+    } 
     titles <- get_best_recipies(input$Ingredients)$recipe_adding_least_ingredients %>% select(2)
     urls <- get_best_recipies(input$Ingredients)$recipe_adding_least_ingredients %>% select(1)
     vec <- map2_chr(titles$recipeTitle, urls$URL, ~as.character(a(.x, href = .y)))
@@ -55,7 +91,6 @@ app_server <- function(input, output, session) {
   observe({
     updateSelectizeInput(session = session, inputId = "Ingredients", choices = ingredients())
   })
-  
 
   output$title1 <- renderText({
     first_msg() 

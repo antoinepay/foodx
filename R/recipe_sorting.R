@@ -1,7 +1,7 @@
 #' Top 2 quickest recipes
 #'
 #' @param tibble 
-#'
+#' @import dplyr
 #' @return
 #' @export
 #'
@@ -13,15 +13,11 @@ sort_time <- function(tibble){
   new_tibble$totalTime[x]
 }
 
-sort_time_each_tiblle<-function(list_of_frame){
-  output<-lapply(list_of_frame, sort_time)
-  output
-}
 
 #' Top 2 cheapest recipes
 #'
 #' @param tibble 
-#'
+#' @import dplyr
 #' @return
 #' @export
 #'
@@ -32,15 +28,10 @@ sort_budget <- function(tibble){
   tibble$recipeCost[z]
 }
 
-sort_budget_each_tiblle<-function(list_of_frame){
-  output<-lapply(list_of_frame, sort_budget)
-  output
-}
-
 #' Top 2 easiest recipes
 #'
 #' @param tibble 
-#'
+#' @import dplyr
 #' @return
 #' @export
 #'
@@ -49,9 +40,4 @@ sort_difficulty<- function(tibble){
   y <- factor(tibble$recipeDifficulty, levels = c("tresfacile", "facile", "moyenne", "difficile"), ordered = TRUE) %>% 
   order()
   tibble$recipeDifficulty[y]
-}
-
-sort_difficulty_each_tiblle<-function(list_of_frame){
-  output<-lapply(list_of_frame, sort_difficulty)
-  output
 }

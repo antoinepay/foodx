@@ -14,7 +14,7 @@ app_ui <- function() {
         label = "Ingrédients", choices = c(), multiple = TRUE, options = list(placeholder = "Sélectionner les ingrédients")
       ),
       checkboxGroupInput(
-        "level",
+        "filters",
         label = "Plus de filtres :", choices = c("Le plus rapide", "Le moins cher", "Le plus facile")
       ),
       actionButton(
