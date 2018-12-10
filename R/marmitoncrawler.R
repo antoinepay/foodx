@@ -1,7 +1,7 @@
 url_titres_recettes <- 'https://www.marmiton.org/recettes/top-internautes-plat-principal.aspx'
 output_marmiton_top_1OO <- 'data/marmiton_100.csv'
 
-#' Fetch recipe details
+#' Fetch fromatted recipe ingredient list and preparation instruction steps
 #'
 #' @param url character
 #'

@@ -1,4 +1,4 @@
-#' List all the ingredients from Marmiton
+#' List all the ingredients from the Marmiton recipe dataset
 #' @return vector
 #'
 #' @import dplyr
