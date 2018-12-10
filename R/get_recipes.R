@@ -46,9 +46,7 @@ is_contained <- function(v1, v2, percentage = 0) {
     return(FALSE)                         
   }
   
-  map(v1, function(val) {
-    val %in% v2
-  }) %>% reduce(all)
+  all(v1 %in% v2)
 }
 
 #' Count the number of appearances of one combination of ingredients in the list of marmiton recipes
@@ -99,13 +97,14 @@ get.matrix.subset.containance<-function(all.subset)
 preprocess_set <- function(
   set,
   minimum_to_use,
-  must_include
+  must_include = NULL
 ){
   all_subsets <- get_subsets_from(set)
   
-  if (must_include!="nothing_bro") {
+  if (!is.null(must_include)) {
     all_subsets<-all_subsets[sapply(all_subsets, is_contained,v1=must_include)]
   }
+  
   all_subsets<-all_subsets[lapply(all_subsets, length) > minimum_to_use]
   all_subsets<-all_subsets[order(sapply(all_subsets,length),decreasing=F)]
   all_subsets
@@ -144,9 +143,9 @@ get_position_of_future_empty<-function(matrix,i){
 #'
 #' @export
 #'
-get_number_of_each_combinations<-function(set,minimum_to_use,must_include){
+get_number_of_each_combinations<-function(set, minimum_to_use, must_include = NULL) {
   
-  all_subsets <- preprocess_set(set, minimum_to_use,must_include)
+  all_subsets <- preprocess_set(set, minimum_to_use, must_include)
   
   a<-rep(0,length(all_subsets))
   
@@ -204,6 +203,8 @@ get_nb_best_combinations<-function(all_subsets, percentage){
 #' and returns a list of recipies containing this combination.
 #' Test with get_best_recipes_du_chef(c("carotte", "jambon", "fromage"), 20, 1, T)
 #'
+#' @importFrom glue glue
+#'
 #' @param ingredients_to_use Set of ingredients
 #' @param proportion_of_recipe 
 #' @param minimum_ingredients_to_use 
@@ -250,7 +251,7 @@ get_best_recipes_du_chef <- function(
     })
   
   if (new_minimum_to_use!=minimum_ingredients_to_use){
-    print(glue::glue("Sorry bro, we could not use {minimum_ingredients_to_use+1} ingredients, 
+    print(glue("Sorry , we could not use {minimum_ingredients_to_use+1} ingredients, 
                      used {new_minimum_to_use+1} instead for the receipe of the chef"))
   }
   
@@ -348,7 +349,7 @@ get_receipe_with_least_ingredients_to_add<-function(
     })
   
   if (new_minimum_to_use!=minimum_ingredients_to_use){
-    print(glue::glue("Sorry bro, we could not use {minimum_ingredients_to_use+1} ingredients, 
+    print(glue::glue("Sorry, we could not use {minimum_ingredients_to_use+1} ingredients, 
                      used {new_minimum_to_use+1} instead for the third type receipe"))
   }
   
@@ -368,9 +369,10 @@ get_receipe_with_least_ingredients_to_add<-function(
 #'
 get_best_recipies<-function(
   ingredients_to_use, 
-  proportion_of_recipe=30, 
-  minimum_ingredients_to_use=0, 
-  must_include="nothing_bro"){
+  proportion_of_recipe = 30, 
+  minimum_ingredients_to_use = 0, 
+  must_include = NULL
+) {
   
   recipe_of_the_chef<-get_best_recipes_du_chef(
     ingredients_to_use, 

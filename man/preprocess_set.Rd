@@ -4,7 +4,7 @@
 \alias{preprocess_set}
 \title{Give all the subsets of the set according to the conditions wanted (minimum ingredient to use, must include ...)}
 \usage{
-preprocess_set(set, minimum_to_use, must_include)
+preprocess_set(set, minimum_to_use, must_include = NULL)
 }
 \arguments{
 \item{set}{}
