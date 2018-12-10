@@ -10,28 +10,45 @@
 #' @importFrom readr read_csv
 #' @importFrom graphics hist
 #' @importFrom stats rnorm
+#' @importFrom purrr map2_chr
 #' @export
 app_server <- function(input, output, session) {
+
   
   ingredients <- reactive({
     ingredients_list()
   })
   
   first_recipe <- eventReactive(input$button, {
-    get_best_recipies(input$Ingredients)$recipe_of_the_chef %>% select(-1)
-  })
+    req(input$Ingredients)
+    #browser()
+   titles <- get_best_recipies(input$Ingredients)$recipe_of_the_chef %>% select(2)
+   urls <- get_best_recipies(input$Ingredients)$recipe_of_the_chef %>% select(1)
+   vec <- map2_chr(titles$recipeTitle, urls$URL, ~as.character(a(.x, href = .y)))
+   paste(vec, collapse = "<br/>")
+  }, ignoreInit = TRUE)
   
   first_msg <- eventReactive(input$button, {"Recettes du chef"})
   
   second_recipe <- eventReactive(input$button, {
-    get_best_recipies(input$Ingredients)$recipe_using_most_ingedrient %>% select(-1)
-  })
+    req(input$Ingredients)
+    #browser()
+    titles <- get_best_recipies(input$Ingredients)$recipe_using_most_ingedrient %>% select(2)
+    urls <- get_best_recipies(input$Ingredients)$recipe_using_most_ingedrient %>% select(1)
+    vec <- map2_chr(titles$recipeTitle, urls$URL, ~as.character(a(.x, href = .y)))
+    paste(vec, collapse = "<br/>")
+  }, ignoreInit = TRUE)
   
   second_msg <- eventReactive(input$button, {"Recettes avec le plus de vos ingrédients"})
   
   third_recipe <- eventReactive(input$button, {
-    get_best_recipies(input$Ingredients)$recipe_adding_least_ingredients %>% select(-1)
-  })
+    req(input$Ingredients)
+    #browser()
+    titles <- get_best_recipies(input$Ingredients)$recipe_adding_least_ingredients %>% select(2)
+    urls <- get_best_recipies(input$Ingredients)$recipe_adding_least_ingredients %>% select(1)
+    vec <- map2_chr(titles$recipeTitle, urls$URL, ~as.character(a(.x, href = .y)))
+    paste(vec, collapse = "<br/>")
+  }, ignoreInit = TRUE)
   
   third_msg <- eventReactive(input$button, {"Recettes avec le moins d'ingrédients à rajouter"})
   
@@ -39,32 +56,38 @@ app_server <- function(input, output, session) {
     updateSelectizeInput(session = session, inputId = "Ingredients", choices = ingredients())
   })
   
-  output$marmiton_recipes <- renderTable({
-    marmiton_recipes
-  })
-  
+
   output$title1 <- renderText({
-    first_msg()
+    first_msg() 
   })
   
-  output$recipe1 <- renderTable({
-    first_recipe()
+  output$recipe1 <- renderUI({
+    req(first_recipe())
+    # browser()
+    cat(first_recipe())
+    HTML(first_recipe())
   })
   
   output$title2 <- renderText({
     second_msg()
   })
   
-  output$recipe2 <- renderTable({
-   second_recipe()
+  output$recipe2 <- renderUI({
+    req(second_recipe())
+    # browser()
+    cat(second_recipe())
+    HTML(second_recipe())
 })
   
   output$title3 <- renderText({
     third_msg()
   })
   
-  output$recipe3 <- renderText({
-    third_recipe()
+  output$recipe3 <- renderUI({
+    req(third_recipe())
+    # browser()
+    cat(second_recipe())
+    HTML(second_recipe())
   })
 
 }
