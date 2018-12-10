@@ -5,7 +5,7 @@
 \title{Give the list of all the recipes given by the three functions called}
 \usage{
 get_best_recipies(ingredients_to_use, proportion_of_recipe = 30,
-  minimum_ingredients_to_use = 0, must_include = "nothing_bro")
+  minimum_ingredients_to_use = 0, must_include = NULL)
 }
 \arguments{
 \item{ingredients_to_use}{}

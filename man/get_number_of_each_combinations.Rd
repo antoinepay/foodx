@@ -4,7 +4,7 @@
 \alias{get_number_of_each_combinations}
 \title{Give the number of appearances of each subset in the list of unique}
 \usage{
-get_number_of_each_combinations(set, minimum_to_use, must_include)
+get_number_of_each_combinations(set, minimum_to_use, must_include = NULL)
 }
 \arguments{
 \item{set}{}
