@@ -7,9 +7,15 @@
 #'
 #' @examples
 sort_time <- function(tibble){
-  x <- numeric(tibble$recipePreparationTime+tibble$recipeCookingTime, ordered = TRUE)
-  order(x) %>% 
-    head()
+  new_tibble <- tibble %>% mutate(totalTime = recipePreparationTime + recipeCookingTime)
+  x <- new_tibble$totalTime %>% 
+  order() 
+  new_tibble$totalTime[x]
+}
+
+sort_time_each_tiblle<-function(list_of_frame){
+  output<-lapply(list_of_frame, sort_time)
+  output
 }
 
 #' Top 2 cheapest recipes
@@ -21,9 +27,14 @@ sort_time <- function(tibble){
 #'
 #' @examples
 sort_budget <- function(tibble){
-  z <- factor(tibble$recipeCost, levels = c("bonmarche", "moyen", "assezcher"), ordered = TRUE)
-  order(z) %>% 
-    head()
+  z <- factor(tibble$recipeCost, levels = c("bonmarche", "moyen", "assezcher"), ordered = TRUE) %>% 
+  order()
+  tibble$recipeCost[z]
+}
+
+sort_budget_each_tiblle<-function(list_of_frame){
+  output<-lapply(list_of_frame, sort_budget)
+  output
 }
 
 #' Top 2 easiest recipes
@@ -35,7 +46,12 @@ sort_budget <- function(tibble){
 #'
 #' @examples
 sort_difficulty<- function(tibble){
-  y <- factor(tibble$recipeDifficulty, levels = c("tresfacile", "facile", "moyenne", "difficile"), ordered = TRUE)
-  order(y) %>% 
-    head()
+  y <- factor(tibble$recipeDifficulty, levels = c("tresfacile", "facile", "moyenne", "difficile"), ordered = TRUE) %>% 
+  order()
+  tibble$recipeDifficulty[y]
+}
+
+sort_difficulty_each_tiblle<-function(list_of_frame){
+  output<-lapply(list_of_frame, sort_difficulty)
+  output
 }
