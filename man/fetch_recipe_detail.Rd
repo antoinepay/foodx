@@ -2,7 +2,7 @@
 % Please edit documentation in R/marmitoncrawler.R
 \name{fetch_recipe_detail}
 \alias{fetch_recipe_detail}
-\title{Fetch recipe details}
+\title{Fetch fromatted recipe ingredient list and preparation instruction steps}
 \usage{
 fetch_recipe_detail(url)
 }
@@ -13,5 +13,5 @@ fetch_recipe_detail(url)
 data.frame
 }
 \description{
-Fetch recipe details
+Fetch fromatted recipe ingredient list and preparation instruction steps
 }

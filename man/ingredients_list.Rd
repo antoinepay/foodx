@@ -2,7 +2,7 @@
 % Please edit documentation in R/ingredients.R
 \name{ingredients_list}
 \alias{ingredients_list}
-\title{List all the ingredients from Marmiton}
+\title{List all the ingredients from the Marmiton recipe dataset}
 \usage{
 ingredients_list()
 }
@@ -10,5 +10,5 @@ ingredients_list()
 vector
 }
 \description{
-List all the ingredients from Marmiton
+List all the ingredients from the Marmiton recipe dataset
 }
