@@ -1,4 +1,3 @@
-library(rvest)
 #' Title
 #'
 #' @param x 
@@ -16,5 +15,5 @@ my_page <- function(x){
   as.vector()
 }
 
-my_page()
+
 
