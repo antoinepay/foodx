@@ -15,6 +15,16 @@
 app_server <- function(input, output, session) {
 
   
+  convert_to_ingredient_list <- function(scanned_list){
+    l <- food_w_match_clean %>% 
+      filter(product_name %in% scanned_list) %>% 
+      select(qwe)
+    l <- as.list(l)
+    
+    return (l)
+  }
+  
+  
   ingredients <- reactive({
     ingredients_list()
   })

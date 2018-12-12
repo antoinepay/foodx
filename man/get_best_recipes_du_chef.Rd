@@ -4,7 +4,7 @@
 \alias{get_best_recipes_du_chef}
 \title{Calculate the best combination of ingredients
 i.e the one that appears the most in the list of unique, with respect to the parameters
-and returns a list of recipies containing this combination.
+and returns a list of recipes containing this combination.
 Test with get_best_recipes_du_chef(c("carotte", "jambon", "fromage"), 20, 1, T)}
 \usage{
 get_best_recipes_du_chef(ingredients_to_use, proportion_of_recipe,
@@ -25,6 +25,6 @@ List of recipes
 \description{
 Calculate the best combination of ingredients
 i.e the one that appears the most in the list of unique, with respect to the parameters
-and returns a list of recipies containing this combination.
+and returns a list of recipes containing this combination.
 Test with get_best_recipes_du_chef(c("carotte", "jambon", "fromage"), 20, 1, T)
 }

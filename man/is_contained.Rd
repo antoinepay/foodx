@@ -4,7 +4,7 @@
 \alias{is_contained}
 \title{The function that will look if something is contained in something
 if number of ingredients if too far (in percentage)
-from the number of ingredients in the receipe, is_contained don't count the containance.
+from the number of ingredients in the recipe, is_contained don't count the containance.
 The percentage parameter is set to 0 by default for reasons you will understand after}
 \usage{
 is_contained(v1, v2, percentage = 0)
@@ -22,6 +22,6 @@ boolean
 \description{
 The function that will look if something is contained in something
 if number of ingredients if too far (in percentage)
-from the number of ingredients in the receipe, is_contained don't count the containance.
+from the number of ingredients in the recipe, is_contained don't count the containance.
 The percentage parameter is set to 0 by default for reasons you will understand after
 }
