@@ -26,7 +26,7 @@ get_subsets_from <- function(set) {
 
 #' The function that will look if something is contained in something
 #' if number of ingredients if too far (in percentage)
-#' from the number of ingredients in the receipe, is_contained don't count the containance.
+#' from the number of ingredients in the recipe, is_contained don't count the containance.
 #' The percentage parameter is set to 0 by default for reasons you will understand after
 #' @importFrom purrr map reduce
 #' @import dplyr
@@ -200,7 +200,7 @@ get_nb_best_combinations<-function(all_subsets, percentage){
 
 #' Calculate the best combination of ingredients
 #' i.e the one that appears the most in the list of unique, with respect to the parameters
-#' and returns a list of recipies containing this combination.
+#' and returns a list of recipes containing this combination.
 #' Test with get_best_recipes_du_chef(c("carotte", "jambon", "fromage"), 20, 1, T)
 #'
 #' @importFrom glue glue
@@ -224,20 +224,18 @@ get_best_recipes_du_chef <- function(
   best_combinations <- try(get_number_of_each_combinations(
     ingredients_to_use, 
     new_minimum_to_use,
-    
     must_include) %>% 
       get_best_combinations() %>% 
       get_nb_best_combinations(proportion_of_recipe),silent = T)
   
   
-  while (class(best_combinations)[1] == "try-error"){
+  while (length(best_combinations$ingredients) ==0){
     
     new_minimum_to_use<-new_minimum_to_use-1
     
     best_combinations <- try(get_number_of_each_combinations(
       ingredients_to_use, 
       new_minimum_to_use,
-      
       must_include) %>% 
         get_best_combinations() %>% 
         get_nb_best_combinations(proportion_of_recipe),silent = T)
@@ -245,17 +243,21 @@ get_best_recipes_du_chef <- function(
   
   best_combination <- best_combinations$ingredients[which.max(best_combinations$nb_occurences)][[1]]
   
-  indexes <- marmiton_recipes_ingredients() %>% 
+  indexes <- marmiton_recipes_ingredients %>% 
     map_lgl(function(ingredients) {
       is_contained(best_combination, ingredients, proportion_of_recipe)
     })
   
   if (new_minimum_to_use!=minimum_ingredients_to_use){
     print(glue("Sorry , we could not use {minimum_ingredients_to_use+1} ingredients, 
-                     used {new_minimum_to_use+1} instead for the receipe of the chef"))
+                     used {new_minimum_to_use+1} instead for the recipe of the chef"))
   }
   
+  if (dim(marmiton_recipes[indexes,])[1]==0) {
+    print(glue("Sorry the Chef has nothing for you to cover {proportion_of_recipe}% of the recipe"))}
+  
   marmiton_recipes[indexes,]
+  
   }
 
 
@@ -270,7 +272,7 @@ get_best_recipes_du_chef <- function(
 #' @return list of recipes 
 #' @export
 #'
-get_best_receipe_using_most_ingredients<-function(
+get_best_recipe_using_most_ingredients<-function(
   ingredients_to_use, 
   must_include
 ){
@@ -284,7 +286,7 @@ get_best_receipe_using_most_ingredients<-function(
   
   best_combination <- best_combinations$ingredients[which.max(sapply(best_combinations$ingredients,length))][[1]]
   
-  indexes <- marmiton_recipes_ingredients() %>% 
+  indexes <- marmiton_recipes_ingredients %>% 
     map_lgl(function(ingredients) {
       is_contained(best_combination, ingredients,0)
     })
@@ -296,8 +298,8 @@ get_best_receipe_using_most_ingredients<-function(
 
 
 
-#' Calculate the combination that is the closest to the combination of one receipe
-#' and returns the corresponding receipe
+#' Calculate the combination that is the closest to the combination of one recipe
+#' and returns the corresponding recipe
 #' 
 #' @param ingredients_to_use 
 #' @param minimum_ingredients_to_use 
@@ -306,7 +308,7 @@ get_best_receipe_using_most_ingredients<-function(
 #' @return list of recipes
 #' @export
 #'
-get_receipe_with_least_ingredients_to_add<-function(
+get_recipe_with_least_ingredients_to_add<-function(
   ingredients_to_use, 
   minimum_ingredients_to_use, 
   must_include
@@ -343,14 +345,14 @@ get_receipe_with_least_ingredients_to_add<-function(
   }
   best_combination <- best_combination_bis$ingredients[which.max(best_combination_bis$nb_occurences)][[1]]
   
-  indexes <- marmiton_recipes_ingredients() %>% 
+  indexes <- marmiton_recipes_ingredients %>% 
     map_lgl(function(ingredients) {
       is_contained(best_combination, ingredients,v)
     })
   
   if (new_minimum_to_use!=minimum_ingredients_to_use){
-    print(glue::glue("Sorry, we could not use {minimum_ingredients_to_use+1} ingredients, 
-                     used {new_minimum_to_use+1} instead for the third type receipe"))
+    print(glue("Sorry, we could not use {minimum_ingredients_to_use+1} ingredients, 
+                     used {new_minimum_to_use+1} instead for the third type recipe"))
   }
   
   marmiton_recipes[indexes,]
@@ -367,7 +369,7 @@ get_receipe_with_least_ingredients_to_add<-function(
 #'
 #' @export
 #'
-get_best_recipies<-function(
+get_best_recipes<-function(
   ingredients_to_use, 
   proportion_of_recipe = 30, 
   minimum_ingredients_to_use = 0, 
@@ -380,11 +382,11 @@ get_best_recipies<-function(
     minimum_ingredients_to_use, 
     must_include)
   
-  recipe_using_most_ingedrient<-get_best_receipe_using_most_ingredients(
+  recipe_using_most_ingedrient<-get_best_recipe_using_most_ingredients(
     ingredients_to_use, 
     must_include)
   
-  recipe_adding_least_ingredients<-get_receipe_with_least_ingredients_to_add(
+  recipe_adding_least_ingredients<-get_recipe_with_least_ingredients_to_add(
     ingredients_to_use, 
     minimum_ingredients_to_use, 
     must_include)
