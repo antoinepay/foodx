@@ -245,7 +245,7 @@ get_best_recipes_du_chef <- function(
   
   best_combination <- best_combinations$ingredients[which.max(best_combinations$nb_occurences)][[1]]
   
-  indexes <- get_list_of_unique() %>% 
+  indexes <- marmiton_recipes_ingredients() %>% 
     map_lgl(function(ingredients) {
       is_contained(best_combination, ingredients, proportion_of_recipe)
     })
@@ -284,7 +284,7 @@ get_best_receipe_using_most_ingredients<-function(
   
   best_combination <- best_combinations$ingredients[which.max(sapply(best_combinations$ingredients,length))][[1]]
   
-  indexes <- get_list_of_unique() %>% 
+  indexes <- marmiton_recipes_ingredients() %>% 
     map_lgl(function(ingredients) {
       is_contained(best_combination, ingredients,0)
     })
@@ -343,7 +343,7 @@ get_receipe_with_least_ingredients_to_add<-function(
   }
   best_combination <- best_combination_bis$ingredients[which.max(best_combination_bis$nb_occurences)][[1]]
   
-  indexes <- get_list_of_unique() %>% 
+  indexes <- marmiton_recipes_ingredients() %>% 
     map_lgl(function(ingredients) {
       is_contained(best_combination, ingredients,v)
     })
