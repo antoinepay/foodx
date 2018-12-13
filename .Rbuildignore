@@ -1,6 +1,6 @@
-^data/food_with_matches\.csv$
-^data/food\.csv$
-^data/recipe_data\.csv$
+^raw-data/food_with_matches\.csv$
+^raw-data/food\.csv$
+^raw-data/recipe_data\.csv$
 ^devstuffs\.R$
 ^LICENSE\.md$
 ^.*\.Rproj$
