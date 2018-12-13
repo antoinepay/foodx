@@ -317,6 +317,8 @@ get_best_recipe_using_most_ingredients <- function(
 #' @importFrom purrr map_lgl
 #' @import dplyr
 #' 
+#' @importFrom glue glue
+#' @importFrom purrr map_lgl
 #' @param ingredients_to_use 
 #' @param minimum_ingredients_to_use 
 #' @param must_include 
@@ -368,8 +370,8 @@ get_recipe_with_least_ingredients_to_add<-function(
     })
   
   if (new_minimum_to_use!=minimum_ingredients_to_use){
-    print(glue("Sorry, we could not use {minimum_ingredients_to_use} ingredients, 
-                     used {new_minimum_to_use} instead for the third type recipe"))
+    print(glue("Sorry, we could not use {minimum_ingredients_to_use+1} ingredients, 
+                     used {new_minimum_to_use+1} instead for the third type receipe"))
   }
   
   marmiton_recipes[indexes,]

@@ -91,13 +91,6 @@ app_server <- function(input, output, session) {
     else if (input$filters == "Le moins cher"){
       tibble <- get_best_recipes(input$Ingredients, minimum_ingredients_to_use = input$minimum_to_use, must_include = input$principal_ingredients)$recipe_adding_least_ingredients %>% sort_difficulty()
     } 
-    urls <- tibble %>% select(1)
-    titles <- tibble %>% select(2)
-    ings <- tibble %>% select(11)
-    list <- c(urls$URL, titles$recipeTitle, ings$recipeIngredients)
-    vec <- list %>% 
-      imap_chr(~ as.character(tags$div(class = "recipe", checked = NA, tags$a(href = ., .), tags$p(.))))
-    paste(vec, collapse = "<br/>")
   }, ignoreInit = TRUE)
   
   third_msg <- eventReactive(input$button, {as.character(tags$div(class = "header", checked = NA, tags$h4("Recettes avec le moins d'ingrédients à ajouter")))})
