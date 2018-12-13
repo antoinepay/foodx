@@ -40,28 +40,7 @@ data("food_w_match_clean")
 # browseURL("hop.xlsx")
 ```
 
-```{r}
-# recipe_pic <- read_csv("data/recipe_pic.csv")
-# marmiton_recipes <- marmiton_recipes %>% left_join(recipe_pic, by='URL')
-# 
-# devtools::use_data(marmiton_recipes,marmiton_recipes_ingredients,must_have_ingredients,internal=TRUE,overwrite=TRUE)
-```
-```{r}
 
-```
-
-
-###########doesn't work
-```{r}
-category_s <- na.omit(data %>% 
-                        dplyr::select(code, categorie_simple) %>%
-                        mutate(categorie_simple = gsub("-"," ",categorie_simple)))
-```
-```{r}
-similarity_matrix <- as.data.frame(stringdistmatrix(tolower(category_s$categorie_simple),all_ingredients,method = "jaccard"))
-top_ingredient <- as.data.frame(colnames(similarity_matrix)[max.col(similarity_matrix,ties.method="first")])
-colnames(top_ingredient) <- c("t")
-```
 
 ```{r}
 category_s %>% mutate(possible_ingredient = all_ingredients[as.numeric(substring(top_ingredient$t,2))])
@@ -111,6 +90,34 @@ res.MIPCA <- MIPCA(as.matrix(food2 %>% dplyr::select(-code)), ncp = 2, nboot = 1
 ```
 
 ```{r}
-data(food_w_match_clean)
+new_grade <- readRDS('data/new_grade.rds')
+
+food_new_score <- food_w_match_clean %>% inner_join(new_grade,by='code')
+food_w_match_clean <- unique(food_new_score)
+names(food_new_score) <- c("code","product_name","qwe","nutrition-score-fr_100g")
+
+
+unique(food_new_score)
+
+usethis::use_data(food_w_match_clean,marmiton_recipes,marmiton_recipes_ingredients, must_have_ingredients,overwrite = TRUE)
 ```
+
+```{r}
+#' Add nutrition score to food
+#'
+#' @param scores 
+#' @param food
+#' 
+#' 
+#'
+#' @return  augmented food dataframe
+#' @export
+add_grade <- function(food,scores){
+  
+  food_new <- food %>% inner_join(scores, by='code')
+  return(food_new)
+  
+}
+```
+
 
