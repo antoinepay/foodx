@@ -18,7 +18,7 @@ app_ui <- function() {
       textInput(
         'barcodes_input',
         label = "Code-barres :",
-        placeholder = "Séparer les code-barres par un espace"
+        placeholder = "S\u00E9parer les code-barres par un espace"
       ),
       bsCollapse(id = "collapseCam",
                  bsCollapsePanel("Camera", tags$div(style="text-align:center",
@@ -29,19 +29,19 @@ app_ui <- function() {
       ),
       selectizeInput(
         "Ingredients", 
-        label = "Ingrédients", choices = c(), 
-        multiple = TRUE, options = list(placeholder = "Sélectionner les ingrédients")
+        label = "Ingr\u00E9dients", choices = c(), 
+        multiple = TRUE, options = list(placeholder = "S\u00E9lectionner les ingr\u00E9dients")
       ),
       
       selectInput(
         "minimum_to_use",
-        label = "Nombre minimum de vos ingrédients à utiliser :", choices = c()
+        label = "Nombre minimum de vos ingr\u00E9dients \u00E0 utiliser :", choices = c()
       ),
       
       selectizeInput(
         "principal_ingredients",
-        label = "Principaux ingrédients à utiliser :", choices = c(), 
-        multiple = TRUE, options = list(placehoder = "Sélectionner les principaux ingrédients de votre recette")
+        label = "Principaux ingr\u00E9dients \u00E0 utiliser :", choices = c(), 
+        multiple = TRUE, options = list(placehoder = "S\u00E9lectionner les principaux ingr\u00E9dients de votre recette")
       ),
       
       radioButtons(
