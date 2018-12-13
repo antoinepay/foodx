@@ -17,7 +17,8 @@ app_ui <- function() {
     sidebarPanel(
       textInput(
         'barcodes_input',
-        label = "Code-barres :"
+        label = "Code-barres :",
+        placeholder = "Séparer les code-barres par un espace"
       ),
       bsCollapse(id = "collapseCam",
                  bsCollapsePanel("Camera", tags$div(style="text-align:center",

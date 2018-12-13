@@ -7,10 +7,10 @@
 recipe_score(list_of)
 }
 \arguments{
-\item{list_of}{}
+\item{list_of}{list of ingredients in a recipe}
 }
 \value{
-returns the average nutrition score for a list of ingredients
+returns the average nutrition score for the list of ingredients (of a recipe)
 }
 \description{
 Takes a list of ingredients and returns the average nutrition grade
