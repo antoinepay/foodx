@@ -10,9 +10,20 @@ app_ui <- function() {
     
     sidebarPanel(
       selectizeInput(
-        "ingredients", 
-        label = "Ingr\u00E9dients", choices = c(), 
-        multiple = TRUE, options = list(placeholder = "S\u00E9lectionner les ingr\u00E9dients")
+        "Ingredients", 
+        label = "Ingrédients", choices = c(), 
+        multiple = TRUE, options = list(placeholder = "Sélectionner les ingrédients")
+      ),
+      
+      selectInput(
+        "minimum_to_use",
+        label = "Combien de vos ingrédients voulez-vous utiliser au minimum ?", choices = c()
+      ),
+      
+      selectizeInput(
+        "principal_ingredients",
+        label = "Principaux ingrédients à utiliser", choices = c(), 
+        multiple = TRUE, options = list(placehoder = "Sélectionner les principaux ingrédients de votre recette")
       ),
       
       checkboxGroupInput(
@@ -25,11 +36,11 @@ app_ui <- function() {
     ),
     
     mainPanel(
-      textOutput('title1'), 
+      uiOutput('title1'), 
       uiOutput('recipe1'), 
-      textOutput('title2'), 
+      uiOutput('title2'), 
       uiOutput('recipe2'), 
-      textOutput('title3'), 
+      uiOutput('title3'), 
       uiOutput('recipe3')
     )
   )

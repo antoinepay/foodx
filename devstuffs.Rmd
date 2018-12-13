@@ -1,0 +1,116 @@
+---
+title: "devstuffs"
+author: "Dora Ranilovic"
+date: "November 28, 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+```{r}
+library(readr)
+library(dplyr)
+library(tidyverse)
+library(tidytext)
+library(stringdist)
+library(stringr)
+library(fuzzyjoin)
+```
+
+```{r}
+# data <- read.csv("data/food.csv",encoding ="UTF-8")
+# data <- filter_categories(data)
+```
+
+```{r}
+ingredients <- as.vector(ingredients_list()$ingredient)
+food_w_match <- read_csv("data/food_with_matches.csv")
+
+food_w_match_clean <- food_w_match %>%
+  select(code,product_name,qwe =matches) %>% ungroup() %>%
+  dplyr::filter((qwe %in% na.omit(ingredients)))
+
+
+write_rds(food_w_match_clean,"ggg.rds",compress = "bz")
+usethis::use_data(food_w_match_clean)
+
+data("food_w_match_clean")
+# writexl::write_xlsx(food_w_match_clean,"hop.xlsx")
+# browseURL("hop.xlsx")
+```
+
+```{r}
+# recipe_pic <- read_csv("data/recipe_pic.csv")
+# marmiton_recipes <- marmiton_recipes %>% left_join(recipe_pic, by='URL')
+# 
+# devtools::use_data(marmiton_recipes,marmiton_recipes_ingredients,must_have_ingredients,internal=TRUE,overwrite=TRUE)
+```
+```{r}
+
+```
+
+
+###########doesn't work
+```{r}
+category_s <- na.omit(data %>% 
+                        dplyr::select(code, categorie_simple) %>%
+                        mutate(categorie_simple = gsub("-"," ",categorie_simple)))
+```
+```{r}
+similarity_matrix <- as.data.frame(stringdistmatrix(tolower(category_s$categorie_simple),all_ingredients,method = "jaccard"))
+top_ingredient <- as.data.frame(colnames(similarity_matrix)[max.col(similarity_matrix,ties.method="first")])
+colnames(top_ingredient) <- c("t")
+```
+
+```{r}
+category_s %>% mutate(possible_ingredient = all_ingredients[as.numeric(substring(top_ingredient$t,2))])
+```
+```{r}
+all_ingredients <- as.data.frame(all_ingredients) %>% mutate(all_ingredients=as.character(all_ingredients))
+key <- as.data.frame(tolower(category_s$categorie_simple)) 
+colnames(key) <- c("cat")
+key <- key %>% mutate(cat=as.character(cat))
+fuzzy_left_join(x=key,y=all_ingredients,by = c("cat"="all_ingredients"), match_fun = str_detect)
+```
+
+```{r}
+library(MASS)
+library(missMDA)
+library(readr)
+library(dplyr)
+library(FactoMineR)
+```
+
+```{r}
+fetch_data_from_openfoodfacts()
+food <- read_csv("data/food.csv")
+
+
+b<-c("additives_n","ingredients_that_may_be_from_palm_oil_n","energy_100g",
+  "saturated-fat_100g","fiber_100g","proteins_100g","sugars_100g","fat_100g","carbohydrates_100g",
+  "salt_100g","sodium_100g","product_name","code")
+
+food1<-food[,b]
+
+
+
+food1<-food %>% 
+  dplyr::select(b)%>%
+  dplyr::filter(energy_100g<4000  & fiber_100g<200 & sugars_100g<1000 & salt_100g<200)
+
+
+c<-c("energy_100g",
+     "saturated-fat_100g","fiber_100g","proteins_100g","sugars_100g","fat_100g","carbohydrates_100g",
+     "salt_100g","sodium_100g","proteins_100g","sodium_100g","code")
+
+food2<-food1[,c]
+
+
+res.MIPCA <- MIPCA(as.matrix(food2 %>% dplyr::select(-code)), ncp = 2, nboot = 100)
+```
+
+```{r}
+data(food_w_match_clean)
+```
+

@@ -7,9 +7,11 @@
 split_column_words_to_new_col(df, column_name, words_column_name)
 }
 \arguments{
-\item{df}{}
+\item{df}{df to apply the split on}
 
-\item{col}{}
+\item{column_name}{column to split}
+
+\item{words_column_name}{name of new column}
 }
 \value{
 data.frame

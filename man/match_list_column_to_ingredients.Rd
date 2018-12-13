@@ -9,9 +9,13 @@ match_list_column_to_ingredients(df, ingredient_vector, list_column,
   matches_column)
 }
 \arguments{
-\item{df}{}
+\item{df}{food dataframe}
 
-\item{ingredient_vector}{}
+\item{ingredient_vector}{ingredient list}
+
+\item{list_column}{}
+
+\item{matches_column}{}
 }
 \value{
 data.frame
