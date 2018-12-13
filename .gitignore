@@ -3,4 +3,5 @@
 .RData
 .Ruserdata
 *.csv
+devstuffs.R
 devstuffs.Rmd
