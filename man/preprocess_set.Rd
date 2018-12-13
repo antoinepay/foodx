@@ -9,11 +9,9 @@ preprocess_set(set, minimum_to_use, must_include = NULL)
 \arguments{
 \item{set}{}
 
-\item{minimum_to_use}{}
+\item{minimum_to_use}{a minimum of ingredient you want to use}
 
-\item{must_include}{}
-
-\item{usual.ing}{}
+\item{must_include}{the ingredient that must be in the recipe}
 }
 \value{
 subsets arranged in increasing length

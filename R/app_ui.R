@@ -9,6 +9,10 @@ app_ui <- function() {
     titlePanel("FoodX"),
     
     sidebarPanel(
+      textInput(
+        'barcodes',
+        label = "Code-barres"
+      ),
       selectizeInput(
         "Ingredients", 
         label = "Ingrédients", choices = c(), 
@@ -41,6 +45,13 @@ app_ui <- function() {
     ),
     
     mainPanel(
+      tags$div(
+        HTML('<p id="barcode"></p>
+              <button id="snap">Scan</button>
+              <video id="vid"></video>')
+      ),
+      tags$script(src = "jquery.min.js"),
+      tags$script(src = "webcam.js"),
       uiOutput('title1'), 
       uiOutput('recipe1'), 
       uiOutput('title2'), 

@@ -2,7 +2,7 @@
 % Please edit documentation in R/ingredients.R
 \name{convert_to_ingredient_list}
 \alias{convert_to_ingredient_list}
-\title{List all the ingredients from the Marmiton recipe dataset}
+\title{Convert product name to generic ingredient}
 \usage{
 convert_to_ingredient_list(scanned_list)
 }
@@ -13,5 +13,5 @@ convert_to_ingredient_list(scanned_list)
 vector
 }
 \description{
-List all the ingredients from the Marmiton recipe dataset
+Convert product name to generic ingredient
 }
