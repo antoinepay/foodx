@@ -71,7 +71,7 @@ app_server <- function(input, output, session) {
     recipe_output(tibble)
   }, ignoreInit = TRUE)
   
-  second_msg <- eventReactive(input$button, {as.character(c(tags$div(class = "header", checked = NA, tags$h2("Recettes avec le plus de vos ingrédients"))))})
+  second_msg <- eventReactive(input$button, {as.character(tags$div(class = "header", checked = NA, tags$h2("Recettes avec le plus de vos ingrédients")))})
   
   third_recipe <- eventReactive(input$button, {
     req(input$Ingredients)
