@@ -1,7 +1,7 @@
-
 #' Shiny UI
 #'
 #' @import shiny
+#' @import shinyBS
 #' @export app_ui
 app_ui <- function() {
   fluidPage(
@@ -23,6 +23,13 @@ app_ui <- function() {
       textInput(
         'barcodes',
         label = "Code-barres :"
+      ),
+      bsCollapse(id = "collapseCam",
+                 bsCollapsePanel("Camera", tags$div(style="text-align:center",
+                   HTML('<video style="width:100%;position:relative" id="vid"></video>'),
+                   br(),
+                   actionButton('snap', label = "Scan", class="btn btn-success")
+                   ), style = "info")
       ),
       selectizeInput(
         "Ingredients", 
@@ -51,11 +58,6 @@ app_ui <- function() {
     ),
     
     mainPanel(
-      tags$div(
-        HTML('<p id="barcode"></p>
-              <button id="snap">Scan</button>
-              <video id="vid"></video>')
-      ),
       tags$script(src = "jquery.min.js"),
       tags$script(src = "webcam.js"),
       uiOutput('title1'), 
@@ -67,6 +69,4 @@ app_ui <- function() {
     )
   )
 }
-
-
 

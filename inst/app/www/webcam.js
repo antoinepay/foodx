@@ -26,22 +26,22 @@ function takeASnap(){
 }
 
 function get_barcode(blob) {
-  data = new FormData()
-  data.append('image', blob)
+  data = new FormData();
+  data.append('image', blob);
   var request = new XMLHttpRequest();
   request.open("POST", "http://127.0.0.1:5000/decode");
-  request.send(data)
+  request.send(data);
   request.onreadystatechange = function () {
 
      if (request.readyState == 4 && (request.status == 200)) {
         var barcode = request.responseText;
-        var barcodesInput = $('#barcodes').val()
+        var barcodesInput = $('#barcodes').val();
         if (barcodesInput) {
-          barcodesInput += ', '
+          barcodesInput += ', ';
         }
-        $('#barcodes').val(barcodesInput + barcode)
+        $('#barcodes').val(barcodesInput + barcode);
      } else if(request.readyState == 4 && request.status == 404) {
-        alert('Code barre non détecté')
+        alert('Code barre non détecté');
      }
-}
+  };
 }
