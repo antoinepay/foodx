@@ -6,16 +6,9 @@
 \usage{
 my_page()
 }
-\arguments{
-\item{Noparam}{}
-}
 \value{
 vector
 }
 \description{
 Get the list of spices
-}
-\examples{
-curry, safran, cumin, muscade, gingembre
-
 }

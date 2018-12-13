@@ -35,11 +35,14 @@ function get_barcode(blob) {
 
      if (request.readyState == 4 && (request.status == 200)) {
         var barcode = request.responseText;
-        var barcodesInput = $('#barcodes').val();
+        var barcodesInput = $('#barcodes_input').val();
         if (barcodesInput) {
           barcodesInput += ', ';
         }
-        $('#barcodes').val(barcodesInput + barcode);
+        barcodesInput += barcode
+        $('#barcodes_input').val(barcodesInput);
+        
+        Shiny.setInputValue("barcodes", barcodesInput.split(", "));
      } else if(request.readyState == 4 && request.status == 404) {
         alert('Code barre non détecté');
      }

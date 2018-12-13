@@ -8,17 +8,15 @@ app_ui <- function() {
     
     tags$style(HTML("@import url('//fonts.googleapis.com/css?family=Lobster|Cabin:400,700');")),
       
-    
     titlePanel(
-      (h1("FoodX", 
-          style = "font-family: 'Lobster', cursive;
-        font-weight: 500; line-height: 1.1; 
-          color: #5cb85c"))
+        '', windowTitle = "FoodX"
     ),
+    
+    h1('FoodX', style = "font-family: 'Lobster';font-weight: 500; line-height: 1.1; color: #5cb85c"),
     
     sidebarPanel(
       textInput(
-        'barcodes',
+        'barcodes_input',
         label = "Code-barres :"
       ),
       bsCollapse(id = "collapseCam",
