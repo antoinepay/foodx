@@ -2,13 +2,20 @@
 % Please edit documentation in R/Epices.R
 \name{my_page}
 \alias{my_page}
-\title{Title}
+\title{Get the list of spices}
 \usage{
-my_page(x)
+my_page()
 }
 \arguments{
-\item{x}{}
+\item{Noparam}{}
+}
+\value{
+vector
 }
 \description{
-Title
+Get the list of spices
+}
+\examples{
+curry, safran, cumin, muscade, gingembre
+
 }

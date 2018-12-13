@@ -4,6 +4,8 @@
 #' @import dplyr
 #' @importFrom tidytext unnest_tokens
 #' @importFrom readr read_csv
+#' @importFrom xfun gsub
+#' @import tidyverse new_quosures
 #' 
 #' @export
 ingredients_list <- function(){

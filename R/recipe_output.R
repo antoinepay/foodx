@@ -20,8 +20,8 @@ function_div <- function(URL, recipeTitle, pic_URL, recipeDifficulty, recipeCost
                           tags$td(tags$ul(
                             tags$li(tags$p(glue("Difficult\u00E9 : {recipeDifficulty}"))), 
                             tags$li(tags$p(glue("Prix : {recipeCost}"))),
-                            tags$li(tags$p(glue("Temps de préparation : {recipePreparationTime}"))), 
-                            tags$li(tags$p(glue("Temps de cuisson : {recipeCookingTime}")))))
+                            tags$li(tags$p(glue("Temps de préparation : {recipePreparationTime} minutes"))), 
+                            tags$li(tags$p(glue("Temps de cuisson : {recipeCookingTime} minutes")))))
                         )
                         )
   )

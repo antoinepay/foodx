@@ -2,7 +2,7 @@
 #'
 #' @param Noparam 
 #' @import dplyr
-#' @importFrom rvest read_html
+#' @importFrom xml2 read_html
 #' @importFrom rvest html_nodes
 #' @importFrom rvest html_text
 #'

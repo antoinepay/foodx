@@ -12,7 +12,7 @@ app_ui <- function() {
                       "))
       ),
     
-    headerPanel(
+    titlePanel(
       (h1("FoodX", 
           style = "font-family: 'Lobster', cursive;
         font-weight: 500; line-height: 1.1; 
