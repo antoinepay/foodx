@@ -28,31 +28,14 @@ get_all_product_names <- function() {
 }
 
 #' Convert product name to generic ingredient
-#' @return vector
 #'
 #' @import dplyr
 #' @param scanned_list list of products from database
+#' @return vector of generic ingredients
 #' 
 #' @export
-
 convert_to_ingredient_list <- function(scanned_list){
   food_w_match_clean %>% 
-    filter(product_name %in% scanned_list) %>% 
-    select(qwe) %>% 
-    pull('qwe')
-}
-
-#' Convert bar code to generic ingredient
-#' @return vector
-#'
-#' @import dplyr
-#' @param scanned_codes list of bar codes from database
-#' 
-#' @export
-
-convert_to_ingredient_list2 <- function(scanned_codes){
-  food_w_match_clean %>% 
-    filter(code %in% scanned_codes) %>% 
-    select(qwe) %>% 
-    pull('qwe')
+    filter(code %in% scanned_list) %>% 
+    pull(qwe)
 }

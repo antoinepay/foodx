@@ -6,11 +6,8 @@
 app_ui <- function() {
   fluidPage(
     
-    tags$head(
-      tags$style(HTML("
-                      @import url('//fonts.googleapis.com/css?family=Lobster|Cabin:400,700');
-                      "))
-      ),
+    tags$style(HTML("@import url('//fonts.googleapis.com/css?family=Lobster|Cabin:400,700');")),
+      
     
     titlePanel(
       (h1("FoodX", 

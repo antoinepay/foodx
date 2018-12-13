@@ -14,17 +14,6 @@
 #' @importFrom purrr imap_chr
 #' @export
 app_server <- function(input, output, session) {
-
-  
-  convert_to_ingredient_list <- function(scanned_list){
-    l <- food_w_match_clean %>% 
-      filter(product_name %in% scanned_list) %>% 
-      select(qwe)
-    l <- as.list(l)
-    
-    return (l)
-  }
-  
   
   ingredients <- reactive({
     ingredients_list()$ingredient %>% 
@@ -32,8 +21,11 @@ app_server <- function(input, output, session) {
   })
   
   first_recipe <- eventReactive(input$button, {
-    req(input$Ingredients)
-    #browser()
+    
+    code_ingredients <- convert_to_ingredient_list(strsplit(input$barcodes, split = ','))
+    
+    generic_ingredients <- union(input$Ingredients, code_ingredients)
+    
     if (input$filters == "Aucun"){
       tibble <- get_best_recipes(input$Ingredients, minimum_ingredients_to_use = input$minimum_to_use, must_include = input$principal_ingredients)$recipe_of_the_chef
     }
@@ -55,8 +47,7 @@ app_server <- function(input, output, session) {
   first_msg <- eventReactive(input$button, {as.character(tags$div(class = "header", checked = NA, tags$hr(), tags$h2("Recettes du chef")))})
   
   second_recipe <- eventReactive(input$button, {
-    req(input$Ingredients)
-    #browser()
+    
     if (input$filters == "Aucun"){
       tibble <- get_best_recipes(input$Ingredients, minimum_ingredients_to_use = input$minimum_to_use, must_include = input$principal_ingredients)$recipe_using_most_ingedrient
     }
@@ -81,8 +72,7 @@ app_server <- function(input, output, session) {
   second_msg <- eventReactive(input$button, {as.character(tags$div(class = "header", checked = NA, tags$hr(), tags$h2("Recettes avec le plus de vos ingrédients")))})
   
   third_recipe <- eventReactive(input$button, {
-    req(input$Ingredients)
-   # browser()
+   
     if (input$filters == "Aucun"){
       tibble <- get_best_recipes(input$Ingredients, minimum_ingredients_to_use = input$minimum_to_use, must_include = input$principal_ingredients)$recipe_adding_least_ingredients
     }
@@ -121,8 +111,6 @@ app_server <- function(input, output, session) {
   
   output$recipe1 <- renderUI({
     req(first_recipe())
-    # browser()
-    cat(first_recipe())
     HTML(first_recipe())
   })
   
@@ -132,8 +120,6 @@ app_server <- function(input, output, session) {
   
   output$recipe2 <- renderUI({
     req(second_recipe())
-    # browser()
-    cat(second_recipe())
     HTML(second_recipe())
 })
   
@@ -143,8 +129,6 @@ app_server <- function(input, output, session) {
   
   output$recipe3 <- renderUI({
     req(third_recipe())
-    #browser()
-    cat(third_recipe())
     HTML(third_recipe())
   })
 

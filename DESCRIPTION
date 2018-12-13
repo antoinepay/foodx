@@ -19,5 +19,6 @@ Imports:
     shiny,
     tidytext,
     stringr,
-    glue
+    glue,
+    shinyBS
 RoxygenNote: 6.1.1

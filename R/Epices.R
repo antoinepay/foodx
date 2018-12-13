@@ -1,6 +1,5 @@
 #' Get the list of spices
 #'
-#' @param Noparam 
 #' @import dplyr
 #' @importFrom xml2 read_html
 #' @importFrom rvest html_nodes
@@ -8,8 +7,6 @@
 #'
 #' @return vector
 #' @export
-#'
-#' @examples curry, safran, cumin, muscade, gingembre
 #' 
 my_page <- function(){
   x <- "https://fr.wikipedia.org/wiki/Herbes_et_aromates_de_cuisine"

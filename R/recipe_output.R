@@ -5,13 +5,10 @@
 #' @param recipeDifficulty 
 #' @param recipePreparationTime 
 #' @param recipeCookingTime 
-#' 
-#' @import htmltools
 #'
 #' @return html tag
 #' @export
 #'
-#' @examples
 function_div <- function(URL, recipeTitle, pic_URL, recipeDifficulty, recipeCost, recipePreparationTime, recipeCookingTime) {
   as.character(tags$div(class = "recipe", checked = NA,
                         tags$h4(tags$a(href = URL, recipeTitle)), 
@@ -35,12 +32,11 @@ function_div <- function(URL, recipeTitle, pic_URL, recipeDifficulty, recipeCost
 #' @return html tag
 #' @export
 #'
-#' @examples
 recipe_output <- function(tibble){
-vec <- tibble %>% 
+  vec <- tibble %>% 
     select(c(URL, recipeTitle, pic_URL, recipeDifficulty, recipeCost, recipePreparationTime, recipeCookingTime)) %>%
     mutate (recipeDifficulty = ifelse(recipeDifficulty == "tresfacile", "tr\u00E8s facile", recipeDifficulty)) %>% 
     mutate(recipeCost = ifelse(recipeCost == "bonmarche", "bon march\u00E9", recipeCost)) %>% 
     pmap(function_div)
-paste(vec, collapse = "<br/>")
+  paste(vec, collapse = "<br/>")
 }
