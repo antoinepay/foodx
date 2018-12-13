@@ -57,4 +57,18 @@ score_column <- function(marmiton_recipes){
   
 }
 
+#' Sort nutrition scores into categories for Shiny output
+#'
+#' @param marmiton_recipes a dataframe to add a health index column to 
+#'
+#' @return a dataframe with an extra column
+#' @export
+
+category_health <- function(marmiton_recipes){
+  marmiton_recipes <-  marmiton_recipes %>% mutate(health_index = ifelse(scores<=5, "Surtout Pas",
+                                                                         ifelse(scores<=10 & scores>5, "Bof Bof",
+                                                                                ifelse(scores<=15 & scores>10, "Ca Passe", 
+                                                                                       ifelse(scores>15,"Fonce Alphonse","")))))
+  return(marmiton_recipes)
+  }
 
