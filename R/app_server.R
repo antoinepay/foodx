@@ -33,7 +33,7 @@ app_server <- function(input, output, session) {
   first_recipe <- eventReactive(input$button, {
     req(input$Ingredients)
     #browser()
-    if (is.null(input$filters)){
+    if (input$filters == "Aucun"){
       tibble <- get_best_recipes(input$Ingredients, minimum_ingredients_to_use = input$minimum_to_use, must_include = input$principal_ingredients)$recipe_of_the_chef
     }
     else if (input$filters == "Le plus rapide"){
@@ -53,7 +53,7 @@ app_server <- function(input, output, session) {
   second_recipe <- eventReactive(input$button, {
     req(input$Ingredients)
     #browser()
-    if (is.null(input$filters)){
+    if (input$filters == "Aucun"){
       tibble <- get_best_recipes(input$Ingredients, minimum_ingredients_to_use = input$minimum_to_use, must_include = input$principal_ingredients)$recipe_using_most_ingedrient
     }
     else if (input$filters == "Le plus rapide"){
@@ -76,7 +76,7 @@ app_server <- function(input, output, session) {
   third_recipe <- eventReactive(input$button, {
     req(input$Ingredients)
    # browser()
-    if (is.null(input$filters)){
+    if (input$filters == "Aucun"){
       tibble <- get_best_recipes(input$Ingredients, minimum_ingredients_to_use = input$minimum_to_use, must_include = input$principal_ingredients)$recipe_adding_least_ingredients
     }
     else if (input$filters == "Le plus rapide"){

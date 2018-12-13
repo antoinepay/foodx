@@ -6,12 +6,23 @@
 app_ui <- function() {
   fluidPage(
     
-    titlePanel("FoodX"),
+    tags$head(
+      tags$style(HTML("
+                      @import url('//fonts.googleapis.com/css?family=Lobster|Cabin:400,700');
+                      "))
+      ),
+    
+    headerPanel(
+      (h1("FoodX", 
+          style = "font-family: 'Lobster', cursive;
+        font-weight: 500; line-height: 1.1; 
+          color: #5cb85c"))
+    ),
     
     sidebarPanel(
       textInput(
         'barcodes',
-        label = "Code-barres"
+        label = "Code-barres :"
       ),
       selectizeInput(
         "Ingredients", 
@@ -19,25 +30,20 @@ app_ui <- function() {
         multiple = TRUE, options = list(placeholder = "Sélectionner les ingrédients")
       ),
       
-      textInput(
-        "Code",
-        label = "Entrer le code barre de votre produit :"
-      ),
-      
       selectInput(
         "minimum_to_use",
-        label = "Combien de vos ingrédients voulez-vous utiliser au minimum ?", choices = c()
+        label = "Nombre minimum de vos ingrédients à utiliser :", choices = c()
       ),
       
       selectizeInput(
         "principal_ingredients",
-        label = "Principaux ingrédients à utiliser", choices = c(), 
+        label = "Principaux ingrédients à utiliser :", choices = c(), 
         multiple = TRUE, options = list(placehoder = "Sélectionner les principaux ingrédients de votre recette")
       ),
       
       radioButtons(
         "filters",
-        label = "Plus de filtres :", choices = c("Le plus rapide", "Le moins cher", "Le plus facile")
+        label = "Plus de filtres :", choices = c("Aucun", "Le plus rapide", "Le moins cher", "Le plus facile")
       ),
       actionButton(
         "button", label = "Go"

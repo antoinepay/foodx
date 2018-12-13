@@ -16,10 +16,10 @@ function_div <- function(URL, recipeTitle, pic_URL, recipeDifficulty, recipeCost
   as.character(tags$div(class = "recipe", checked = NA,
                         tags$h4(tags$a(href = URL, recipeTitle)), 
                         tags$table(tags$tr(
-                          tags$td(tags$img(src = pic_URL, width = "150px", height = "150px", title = "Image de la recette")),
+                          tags$td(tags$img(src = pic_URL, width = "150px", height = "150px", title = "Image de la recette", style = "border-radius:50%")),
                           tags$td(tags$ul(
-                            tags$li(tags$p(glue("Difficult\u00E9 de la recette : {recipeDifficulty}"))), 
-                            tags$li(tags$p(glue("Prix de la recette : {recipeCost}"))),
+                            tags$li(tags$p(glue("Difficult\u00E9 : {recipeDifficulty}"))), 
+                            tags$li(tags$p(glue("Prix : {recipeCost}"))),
                             tags$li(tags$p(glue("Temps de préparation : {recipePreparationTime}"))), 
                             tags$li(tags$p(glue("Temps de cuisson : {recipeCookingTime}")))))
                         )
