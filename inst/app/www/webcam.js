@@ -43,6 +43,8 @@ function get_barcode(blob) {
         $('#barcodes_input').val(barcodesInput);
         
         Shiny.setInputValue("barcodes", barcodesInput.split(", "));
+        var audio = new Audio('beep.mp3');
+        audio.play();
      } else if(request.readyState == 4 && request.status == 404) {
         alert('Code barre non détecté');
      }
