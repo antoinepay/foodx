@@ -1,43 +1,38 @@
-#' Top 2 quickest recipes
+#' Quickest recipes
 #'
-#' @param tibble 
+#' @param recipes tibble of recipes
 #' @import dplyr
-#' @return
+#' @return tibble of recipes sorted according to the total time
 #' @export
 #'
-#' @examples
-sort_time <- function(tibble){
-  new_tibble <- tibble %>% mutate(totalTime = recipePreparationTime + recipeCookingTime)
-  x <- new_tibble$totalTime %>% 
-  order() 
-  new_tibble$totalTime[x]
+sort_time <- function(recipes) {
+  recipes %>% 
+    mutate(totalTime = recipePreparationTime + recipeCookingTime) %>% 
+    arrange(totalTime)
 }
 
-
-#' Top 2 cheapest recipes
+#' Cheapest recipes
 #'
-#' @param tibble 
+#' @param recipes tibble of recipes
 #' @import dplyr
-#' @return
+#' @return tibble of recipes sorted according to the budget
 #' @export
 #'
-#' @examples
-sort_budget <- function(tibble){
-  z <- factor(tibble$recipeCost, levels = c("bonmarche", "moyen", "assezcher"), ordered = TRUE) %>% 
-  order()
-  tibble$recipeCost[z]
+sort_budget <- function(recipes) {
+  recipes %>% 
+    mutate(recipeCost = as.factor(recipeCost)) %>% 
+    arrange(recipeCost)
 }
 
-#' Top 2 easiest recipes
+#' Easiest recipes
 #'
-#' @param tibble 
+#' @param recipes tibble of recipes
 #' @import dplyr
-#' @return
+#' @return tibble of recipes sorted according to the budget
 #' @export
 #'
-#' @examples
-sort_difficulty<- function(tibble){
-  y <- factor(tibble$recipeDifficulty, levels = c("tresfacile", "facile", "moyenne", "difficile"), ordered = TRUE) %>% 
-  order()
-  tibble$recipeDifficulty[y]
+sort_difficulty <- function(recipes) {
+  recipes %>% 
+    mutate(recipeDifficulty = as.factor(recipeDifficulty)) %>% 
+    arrange(recipeDifficulty)
 }

@@ -2,13 +2,16 @@
 % Please edit documentation in R/recipe_sorting.R
 \name{sort_difficulty}
 \alias{sort_difficulty}
-\title{Top 2 easiest recipes}
+\title{Easiest recipes}
 \usage{
-sort_difficulty(tibble)
+sort_difficulty(recipes)
 }
 \arguments{
-\item{tibble}{}
+\item{recipes}{tibble of recipes}
+}
+\value{
+tibble of recipes sorted according to the budget
 }
 \description{
-Top 2 easiest recipes
+Easiest recipes
 }

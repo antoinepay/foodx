@@ -2,13 +2,16 @@
 % Please edit documentation in R/recipe_sorting.R
 \name{sort_time}
 \alias{sort_time}
-\title{Top 2 quickest recipes}
+\title{Quickest recipes}
 \usage{
-sort_time(tibble)
+sort_time(recipes)
 }
 \arguments{
-\item{tibble}{}
+\item{recipes}{tibble of recipes}
+}
+\value{
+tibble of recipes sorted according to the total time
 }
 \description{
-Top 2 quickest recipes
+Quickest recipes
 }

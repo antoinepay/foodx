@@ -2,13 +2,16 @@
 % Please edit documentation in R/recipe_sorting.R
 \name{sort_budget}
 \alias{sort_budget}
-\title{Top 2 cheapest recipes}
+\title{Cheapest recipes}
 \usage{
-sort_budget(tibble)
+sort_budget(recipes)
 }
 \arguments{
-\item{tibble}{}
+\item{recipes}{tibble of recipes}
+}
+\value{
+tibble of recipes sorted according to the budget
 }
 \description{
-Top 2 cheapest recipes
+Cheapest recipes
 }
