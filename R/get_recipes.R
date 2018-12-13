@@ -97,9 +97,8 @@ get.matrix.subset.containance<-function(all.subset)
 #' Give all the subsets of the set according to the conditions wanted (minimum ingredient to use, must include ...)
 #'
 #' @param set 
-#' @param minimum_to_use 
-#' @param usual.ing 
-#' @param must_include 
+#' @param minimum_to_use a minimum of ingredient you want to use
+#' @param must_include the ingredient that must be in the recipe
 #'
 #' @return subsets arranged in increasing length
 #' @export
@@ -115,7 +114,7 @@ preprocess_set <- function(
     all_subsets<-all_subsets[sapply(all_subsets, is_contained,v1=must_include)]
   }
   
-  all_subsets<-all_subsets[lapply(all_subsets, length) > minimum_to_use]
+  all_subsets<-all_subsets[lapply(all_subsets, length) >= minimum_to_use]
   all_subsets<-all_subsets[order(sapply(all_subsets,length),decreasing=F)]
   all_subsets
 }
@@ -265,7 +264,7 @@ get_best_recipes_du_chef <- function(
   
   if (new_minimum_to_use!=minimum_ingredients_to_use){
     print(glue("Sorry , we could not use {minimum_ingredients_to_use+1} ingredients, 
-                     used {new_minimum_to_use+1} instead for the recipe of the chef"))
+                     used {new_minimum_to_use} instead for the recipe of the chef"))
   }
   
   if (dim(marmiton_recipes[indexes,])[1]==0) {
@@ -369,8 +368,8 @@ get_recipe_with_least_ingredients_to_add<-function(
     })
   
   if (new_minimum_to_use!=minimum_ingredients_to_use){
-    print(glue("Sorry, we could not use {minimum_ingredients_to_use+1} ingredients, 
-                     used {new_minimum_to_use+1} instead for the third type recipe"))
+    print(glue("Sorry, we could not use {minimum_ingredients_to_use} ingredients, 
+                     used {new_minimum_to_use} instead for the third type recipe"))
   }
   
   marmiton_recipes[indexes,]
