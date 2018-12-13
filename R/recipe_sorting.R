@@ -1,8 +1,8 @@
-#' Quickest recipes
+#' Rank by Quickest recipes
 #'
-#' @param recipes tibble of recipes
+#' @param recipes output tibble of recipes in the shiny app 
 #' @import dplyr
-#' @return tibble of recipes sorted according to the total time
+#' @return tibble of recipes sorted according to the total time required for the recipe
 #' @export
 #'
 sort_time <- function(recipes) {
@@ -11,11 +11,11 @@ sort_time <- function(recipes) {
     arrange(totalTime)
 }
 
-#' Cheapest recipes
+#' Rank by Cheapest recipes
 #'
-#' @param recipes tibble of recipes
+#' @param recipes output tibble of recipes in the shiny app
 #' @import dplyr
-#' @return tibble of recipes sorted according to the budget
+#' @return tibble of recipes sorted according to their cost 
 #' @export
 #'
 sort_budget <- function(recipes) {
@@ -24,11 +24,11 @@ sort_budget <- function(recipes) {
     arrange(recipeCost)
 }
 
-#' Easiest recipes
+#' Rank by Easiest recipes
 #'
-#' @param recipes tibble of recipes
+#' @param recipes output tibble of recipes in the shiny app
 #' @import dplyr
-#' @return tibble of recipes sorted according to the budget
+#' @return tibble of recipes sorted according to the difficulty of preparation
 #' @export
 #'
 sort_difficulty <- function(recipes) {

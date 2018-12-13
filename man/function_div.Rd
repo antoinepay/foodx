@@ -18,6 +18,9 @@ function_div(URL, recipeTitle, pic_URL, recipeDifficulty, recipeCost,
 
 \item{recipeCookingTime}{}
 }
+\value{
+html tag
+}
 \description{
 Recipes output in HTML for the Shiny App
 }
