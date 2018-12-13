@@ -15,6 +15,11 @@ app_ui <- function() {
         multiple = TRUE, options = list(placeholder = "Sélectionner les ingrédients")
       ),
       
+      textInput(
+        "Code",
+        label = "Entrer le code barre de votre produit :"
+      ),
+      
       selectInput(
         "minimum_to_use",
         label = "Combien de vos ingrédients voulez-vous utiliser au minimum ?", choices = c()
@@ -26,7 +31,7 @@ app_ui <- function() {
         multiple = TRUE, options = list(placehoder = "Sélectionner les principaux ingrédients de votre recette")
       ),
       
-      checkboxGroupInput(
+      radioButtons(
         "filters",
         label = "Plus de filtres :", choices = c("Le plus rapide", "Le moins cher", "Le plus facile")
       ),

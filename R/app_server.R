@@ -42,16 +42,13 @@ app_server <- function(input, output, session) {
     else if (input$filters == "Le moins cher"){
     tibble <- get_best_recipes(input$Ingredients, minimum_ingredients_to_use = input$minimum_to_use, must_include = input$principal_ingredients)$recipe_of_the_chef %>% sort_budget()
     } 
-    else if (input$filters == "Le moins cher"){
+    else if (input$filters == "Le plus facile"){
       tibble <- get_best_recipes(input$Ingredients, minimum_ingredients_to_use = input$minimum_to_use, must_include = input$principal_ingredients)$recipe_of_the_chef %>% sort_difficulty()
     } 
-   titles <- tibble %>% select(2)
-   urls <- tibble %>% select(1)
-   vec <- map2_chr(titles$recipeTitle, urls$URL, ~as.character(a(.x, href = .y)))
-   paste(vec, collapse = "<br/>")
+   recipe_output(tibble)
   }, ignoreInit = TRUE)
   
-  first_msg <- eventReactive(input$button, {as.character(tags$div(class = "header", checked = NA, tags$h4("Recettes du chef")))})
+  first_msg <- eventReactive(input$button, {as.character(tags$div(class = "header", checked = NA, tags$h2("Recettes du chef")))})
   
   second_recipe <- eventReactive(input$button, {
     req(input$Ingredients)
@@ -60,21 +57,21 @@ app_server <- function(input, output, session) {
       tibble <- get_best_recipes(input$Ingredients, minimum_ingredients_to_use = input$minimum_to_use, must_include = input$principal_ingredients)$recipe_using_most_ingedrient
     }
     else if (input$filters == "Le plus rapide"){
-      tibble <- get_best_recipes(input$Ingredients, minimum_ingredients_to_use = input$minimum_to_use, must_include = input$principal_ingredients)$recipe_using_most_ingedrient %>% sort_time()
+      tibble <- get_best_recipes(input$Ingredients, minimum_ingredients_to_use = input$minimum_to_use, must_include = input$principal_ingredients)$recipe_using_most_ingedrient %>% 
+        sort_time()
     }
     else if (input$filters == "Le moins cher"){
-      tibble <- get_best_recipes(input$Ingredients, minimum_ingredients_to_use = input$minimum_to_use, must_include = input$principal_ingredients)$recipe_using_most_ingedrient %>% sort_budget()
+      tibble <- get_best_recipes(input$Ingredients, minimum_ingredients_to_use = input$minimum_to_use, must_include = input$principal_ingredients)$recipe_using_most_ingedrient %>% 
+        sort_budget()
     } 
-    else if (input$filters == "Le moins cher"){
-      tibble <- get_best_recipes(input$Ingredients, minimum_ingredients_to_use = input$minimum_to_use, must_include = input$principal_ingredients)$recipe_using_most_ingedrient %>% sort_difficulty()
+    else if (input$filters == "Le plus facile"){
+      tibble <- get_best_recipes(input$Ingredients, minimum_ingredients_to_use = input$minimum_to_use, must_include = input$principal_ingredients)$recipe_using_most_ingedrient %>% 
+        sort_difficulty()
     } 
-    titles <- tibble %>% select(2)
-    urls <- tibble %>% select(1)
-    vec <- map2_chr(titles$recipeTitle, urls$URL, ~as.character(a(.x, href = .y)))
-    paste(vec, collapse = "<br/>")
+    recipe_output(tibble)
   }, ignoreInit = TRUE)
   
-  second_msg <- eventReactive(input$button, {as.character(tags$div(class = "header", checked = NA, tags$h4("Recettes avec le plus de vos ingrédients")))})
+  second_msg <- eventReactive(input$button, {as.character(c(tags$div(class = "header", checked = NA, tags$h2("Recettes avec le plus de vos ingrédients"))))})
   
   third_recipe <- eventReactive(input$button, {
     req(input$Ingredients)
@@ -88,12 +85,13 @@ app_server <- function(input, output, session) {
     else if (input$filters == "Le moins cher"){
       tibble <- get_best_recipes(input$Ingredients, minimum_ingredients_to_use = input$minimum_to_use, must_include = input$principal_ingredients)$recipe_adding_least_ingredients %>% sort_budget()
     } 
-    else if (input$filters == "Le moins cher"){
+    else if (input$filters == "Le plus facile"){
       tibble <- get_best_recipes(input$Ingredients, minimum_ingredients_to_use = input$minimum_to_use, must_include = input$principal_ingredients)$recipe_adding_least_ingredients %>% sort_difficulty()
     } 
+    recipe_output(tibble)
   }, ignoreInit = TRUE)
   
-  third_msg <- eventReactive(input$button, {as.character(tags$div(class = "header", checked = NA, tags$h4("Recettes avec le moins d'ingrédients à ajouter")))})
+  third_msg <- eventReactive(input$button, {as.character(tags$div(class = "header", checked = NA, tags$h2("Recettes avec le moins d'ingrédients à ajouter")))})
   
   observe({
     updateSelectizeInput(session = session, inputId = "Ingredients", choices = ingredients())

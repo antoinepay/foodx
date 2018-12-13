@@ -17,7 +17,7 @@ sort_time <- function(recipes) {
 #' @import dplyr
 #' @return tibble of recipes sorted according to the budget
 #' @export
-#'
+#'sor
 sort_budget <- function(recipes) {
   recipes %>% 
     mutate(recipeCost = as.factor(recipeCost)) %>% 
@@ -33,6 +33,6 @@ sort_budget <- function(recipes) {
 #'
 sort_difficulty <- function(recipes) {
   recipes %>% 
-    mutate(recipeDifficulty = as.factor(recipeDifficulty)) %>% 
+    mutate(recipeDifficulty = factor(recipeDifficulty, levels = c("tresfacile", "facile", "moyenne", "difficile"), ordered = TRUE)) %>% 
     arrange(recipeDifficulty)
 }
