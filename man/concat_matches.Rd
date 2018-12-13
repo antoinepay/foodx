@@ -7,7 +7,7 @@
 concat_matches(df, ...)
 }
 \arguments{
-\item{df}{}
+\item{df}{food dataframe from OpenFoodFacts}
 
 \item{...}{matches column names}
 }

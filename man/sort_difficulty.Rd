@@ -2,16 +2,16 @@
 % Please edit documentation in R/recipe_sorting.R
 \name{sort_difficulty}
 \alias{sort_difficulty}
-\title{Easiest recipes}
+\title{Rank by Easiest recipes}
 \usage{
 sort_difficulty(recipes)
 }
 \arguments{
-\item{recipes}{tibble of recipes}
+\item{recipes}{output tibble of recipes in the shiny app}
 }
 \value{
-tibble of recipes sorted according to the budget
+tibble of recipes sorted according to the difficulty of preparation
 }
 \description{
-Easiest recipes
+Rank by Easiest recipes
 }

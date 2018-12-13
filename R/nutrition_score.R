@@ -2,11 +2,11 @@
 #'
 #' @param ingredient an ingredient
 #'
-#' @return
+#' @return an average nutrition score for the ingredient input
 #' @export
 
 nutrition_score <- function(ingredient){
-  df <- food %>% filter(matches == ingredient) 
+  df <- food_w_match_clean %>% filter(matches == ingredient) 
   avg <- mean(df$`nutrition-score-fr_100g`, na.rm = TRUE)
   return(avg)
 }
@@ -16,9 +16,9 @@ nutrition_score <- function(ingredient){
 
 #' Takes a list of ingredients and returns the average nutrition grade
 #'
-#' @param list_of 
+#' @param list_of list of ingredients in a recipe
 #'
-#' @return returns the average nutrition score for a list of ingredients
+#' @return returns the average nutrition score for the list of ingredients (of a recipe)
 #' @export
 recipe_score <- function(list_of){ 
   

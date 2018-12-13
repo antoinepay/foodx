@@ -2,16 +2,16 @@
 % Please edit documentation in R/repository.R
 \name{get_last_category}
 \alias{get_last_category}
-\title{Split and get the last one}
+\title{Split categories and get the last item listed}
 \usage{
 get_last_category(categories)
 }
 \arguments{
-\item{categories}{character with many categories separated by comma}
+\item{categories}{character with multiple categories separated by a comma}
 }
 \value{
-category
+category with a single element
 }
 \description{
-Split and get the last one
+Split categories and get the last item listed
 }
