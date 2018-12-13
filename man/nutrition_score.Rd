@@ -9,6 +9,9 @@ nutrition_score(ingredient)
 \arguments{
 \item{ingredient}{an ingredient}
 }
+\value{
+an average nutrition score for the ingredient input
+}
 \description{
 Get the average nutrition score of an ingredient
 }
