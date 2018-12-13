@@ -25,7 +25,7 @@ get_all_product_names <- function() {
   food_w_match_clean %>% dplyr::select(product_name) %>% as.vector()
 }
 
-#' List all the ingredients from the Marmiton recipe dataset
+#' Convert product name to generic ingredient
 #' @return vector
 #'
 #' @import dplyr
@@ -36,6 +36,21 @@ get_all_product_names <- function() {
 convert_to_ingredient_list <- function(scanned_list){
   food_w_match_clean %>% 
     filter(product_name %in% scanned_list) %>% 
+    select(qwe) %>% 
+    pull('qwe')
+}
+
+#' Convert bar code to generic ingredient
+#' @return vector
+#'
+#' @import dplyr
+#' @param scanned_codes list of bar codes from database
+#' 
+#' @export
+
+convert_to_ingredient_list2 <- function(scanned_codes){
+  food_w_match_clean %>% 
+    filter(code %in% scanned_codes) %>% 
     select(qwe) %>% 
     pull('qwe')
 }
