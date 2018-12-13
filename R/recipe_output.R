@@ -5,8 +5,10 @@
 #' @param recipeDifficulty 
 #' @param recipePreparationTime 
 #' @param recipeCookingTime 
+#' 
+#' @import htmltools
 #'
-#' @return
+#' @return html tag
 #' @export
 #'
 #' @examples
@@ -26,6 +28,14 @@ function_div <- function(URL, recipeTitle, pic_URL, recipeDifficulty, recipeCost
   )
 }
 
+#' Get a list of html tags, iterated over an entire dataframe
+#'
+#' @param tibble 
+#'
+#' @return html tag
+#' @export
+#'
+#' @examples
 recipe_output <- function(tibble){
 vec <- tibble %>% 
     select(c(URL, recipeTitle, pic_URL, recipeDifficulty, recipeCost, recipePreparationTime, recipeCookingTime)) %>%
