@@ -14,7 +14,7 @@ is_contained(v1, v2, percentage = 0)
 
 \item{v2}{vector to contain v1}
 
-\item{percentage}{}
+\item{percentage}{percentage of v2 covered by the elements of v2}
 }
 \value{
 boolean

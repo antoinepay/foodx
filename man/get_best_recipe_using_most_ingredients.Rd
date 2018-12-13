@@ -8,9 +8,9 @@ and returns the corresponding receipies}
 get_best_recipe_using_most_ingredients(ingredients_to_use, must_include)
 }
 \arguments{
-\item{ingredients_to_use}{}
+\item{ingredients_to_use}{set of ingredients to use in our search}
 
-\item{must_include}{}
+\item{must_include}{list of mandatory ingredients to use}
 }
 \value{
 list of recipes

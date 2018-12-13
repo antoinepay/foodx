@@ -2,13 +2,16 @@
 % Please edit documentation in R/get_recipes.R
 \name{get_best_combinations}
 \alias{get_best_combinations}
-\title{returns the subsets that have one or more appearance in the list of unique}
+\title{Returns the subsets that have one or more appearances in the list of marmiton's ingredients}
 \usage{
 get_best_combinations(list)
 }
 \arguments{
-\item{list}{}
+\item{list}{list of subsets of ingredients}
+}
+\value{
+list of subsets usable in some recipes
 }
 \description{
-returns the subsets that have one or more appearance in the list of unique
+Returns the subsets that have one or more appearances in the list of marmiton's ingredients
 }

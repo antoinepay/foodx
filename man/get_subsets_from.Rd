@@ -7,10 +7,10 @@
 get_subsets_from(set)
 }
 \arguments{
-\item{set}{}
+\item{set}{original set of ingredients}
 }
 \value{
-list of subsets
+list of all possible subsets within the original one
 }
 \description{
 Quick way to obtain all the subsets given a set

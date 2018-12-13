@@ -11,13 +11,13 @@ get_best_recipes_du_chef(ingredients_to_use, proportion_of_recipe,
   minimum_ingredients_to_use, must_include)
 }
 \arguments{
-\item{ingredients_to_use}{Set of ingredients}
+\item{ingredients_to_use}{set of ingredients to use in our search}
 
-\item{proportion_of_recipe}{}
+\item{proportion_of_recipe}{proportion of the recipe covered by the subset of ingredients}
 
-\item{minimum_ingredients_to_use}{}
+\item{minimum_ingredients_to_use}{number of minimum ingredients to use in the recipe}
 
-\item{must_include}{}
+\item{must_include}{list of mandatory ingredients to use}
 }
 \value{
 List of recipes

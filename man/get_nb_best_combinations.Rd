@@ -10,9 +10,12 @@ if percentage demanded is 40\% than the subset "carotte" won't appear.}
 get_nb_best_combinations(all_subsets, percentage)
 }
 \arguments{
-\item{all_subsets}{}
+\item{all_subsets}{all possible subsets from the original list of ingredients}
 
-\item{percentage}{}
+\item{percentage}{miminum percentage of the recipe to be covered by the subset of ingredients}
+}
+\value{
+list of occurences for each subset
 }
 \description{
 returns the number of appearance of each interresting subset in the list of unique, 

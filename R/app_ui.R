@@ -10,9 +10,9 @@ app_ui <- function() {
     
     sidebarPanel(
       selectizeInput(
-        "Ingredients", 
-        label = "Ingrédients", choices = c(), 
-        multiple = TRUE, options = list(placeholder = "Sélectionner les ingrédients")
+        "ingredients", 
+        label = "Ingr\u00E9dients", choices = c(), 
+        multiple = TRUE, options = list(placeholder = "S\u00E9lectionner les ingr\u00E9dients")
       ),
       
       checkboxGroupInput(

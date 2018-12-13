@@ -73,7 +73,7 @@ app_server <- function(input, output, session) {
     paste(vec, collapse = "<br/>")
   }, ignoreInit = TRUE)
   
-  second_msg <- eventReactive(input$button, {"Recettes avec le plus de vos ingrédients"})
+  second_msg <- eventReactive(input$button, {"Recettes avec le plus de vos ingr\u00E9dients"})
   
   third_recipe <- eventReactive(input$button, {
     req(input$Ingredients)
@@ -96,10 +96,10 @@ app_server <- function(input, output, session) {
     paste(vec, collapse = "<br/>")
   }, ignoreInit = TRUE)
   
-  third_msg <- eventReactive(input$button, {"Recettes avec le moins d'ingrédients à rajouter"})
+  third_msg <- eventReactive(input$button, {"Recettes avec le moins d'ingr\u00E9dients \u00E0 rajouter"})
   
   observe({
-    updateSelectizeInput(session = session, inputId = "Ingredients", choices = ingredients())
+    updateSelectizeInput(session = session, inputId = "ingredients", choices = ingredients())
   })
 
   output$title1 <- renderText({

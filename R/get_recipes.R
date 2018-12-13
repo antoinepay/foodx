@@ -1,13 +1,20 @@
+#' Remove common ingredients such as salt, pepper, etc. 
+#'
+#' @param list list of ingredients
+#'
+#' @return list of filtered ingredients
+#' @export
+#'
 remove_ingredients_you_always_have <- function(list){
-  list<-list[! (list %in% must_have_ingredients)]
-  list
+  list[!(list %in% must_have_ingredients)]
 }
 
 #' Quick way to obtain all the subsets given a set
 #'
-#' @param set
+#' @importFrom purrr map
+#' @param set original set of ingredients
 #'
-#' @return list of subsets
+#' @return list of all possible subsets within the original one
 #' @export
 #'
 get_subsets_from <- function(set) {
@@ -28,14 +35,15 @@ get_subsets_from <- function(set) {
 #' if number of ingredients if too far (in percentage)
 #' from the number of ingredients in the recipe, is_contained don't count the containance.
 #' The percentage parameter is set to 0 by default for reasons you will understand after
+#' 
 #' @importFrom purrr map reduce
 #' @import dplyr
 #'
 #' @param v1 vector to be included in v2
 #' @param v2 vector to contain v1
-#' @param percentage 
+#' @param percentage percentage of v2 covered by the elements of v2
 #'
-#' @return boolean
+#' @return boolean 
 #' @export
 #'
 is_contained <- function(v1, v2, percentage = 0) {
@@ -50,8 +58,10 @@ is_contained <- function(v1, v2, percentage = 0) {
 }
 
 #' Count the number of appearances of one combination of ingredients in the list of marmiton recipes
+#' 
 #' @import dplyr
 #' @importFrom purrr map reduce
+#' 
 #' @param one_combination 
 #' @param percentage 
 #'
@@ -164,19 +174,20 @@ get_number_of_each_combinations<-function(set, minimum_to_use, must_include = NU
     }
     
   }
-  list(all_subsets,a)
+  list(all_subsets, a)
 }
 
 
 
-#' returns the subsets that have one or more appearance in the list of unique 
+#' Returns the subsets that have one or more appearances in the list of marmiton's ingredients
 #'
-#' @param list 
+#' @param list list of subsets of ingredients
 #'
 #' @export
+#' @return list of subsets usable in some recipes
 #'
 get_best_combinations<-function(list){
-  index_vector<-list[[2]]>0
+  index_vector <- list[[2]] > 0
   list[[1]][index_vector]
 }
 
@@ -185,10 +196,13 @@ get_best_combinations<-function(list){
 #' (e.g. if recipie is carotte oeuf fromage, the subset "carotte" covers 33\% of the recipie)
 #' if percentage demanded is 40\% than the subset "carotte" won't appear.
 #'
-#' @param all_subsets 
-#' @param percentage 
+#' @importFrom purrr map
+#' 
+#' @param all_subsets all possible subsets from the original list of ingredients
+#' @param percentage miminum percentage of the recipe to be covered by the subset of ingredients 
 #'
 #' @export
+#' @return list of occurences for each subset
 get_nb_best_combinations<-function(all_subsets, percentage){
   
   nb_occurences <- map(all_subsets, function(subset) {
@@ -204,11 +218,12 @@ get_nb_best_combinations<-function(all_subsets, percentage){
 #' Test with get_best_recipes_du_chef(c("carotte", "jambon", "fromage"), 20, 1, T)
 #'
 #' @importFrom glue glue
+#' @import dplyr
 #'
-#' @param ingredients_to_use Set of ingredients
-#' @param proportion_of_recipe 
-#' @param minimum_ingredients_to_use 
-#' @param must_include 
+#' @param ingredients_to_use set of ingredients to use in our search
+#' @param proportion_of_recipe proportion of the recipe covered by the subset of ingredients
+#' @param minimum_ingredients_to_use number of minimum ingredients to use in the recipe
+#' @param must_include list of mandatory ingredients to use
 #'
 #' @return List of recipes
 #' @export
@@ -261,26 +276,28 @@ get_best_recipes_du_chef <- function(
   }
 
 
-
-
 #' Calculate the biggest combination of ingredient that appears at least one time
 #' and returns the corresponding receipies
 #'
-#' @param ingredients_to_use 
-#' @param must_include 
+#' @import dplyr
+#' @importFrom purrr map_lgl
+#' 
+#' @param ingredients_to_use set of ingredients to use in our search
+#' @param must_include list of mandatory ingredients to use 
 #'
 #' @return list of recipes 
 #' @export
 #'
-get_best_recipe_using_most_ingredients<-function(
+get_best_recipe_using_most_ingredients <- function(
   ingredients_to_use, 
   must_include
 ){
+  
   best_combinations <- get_number_of_each_combinations(
     ingredients_to_use,
     minimum_to_use=0,
-    
-    must_include) %>% 
+    must_include
+  ) %>% 
     get_best_combinations() %>% 
     get_nb_best_combinations(0)
   
@@ -294,12 +311,12 @@ get_best_recipe_using_most_ingredients<-function(
   marmiton_recipes[indexes,]
 }
 
-
-
-
-
 #' Calculate the combination that is the closest to the combination of one recipe
 #' and returns the corresponding recipe
+#' 
+#' @importFrom glue glue
+#' @importFrom purrr map_lgl
+#' @import dplyr
 #' 
 #' @param ingredients_to_use 
 #' @param minimum_ingredients_to_use 
@@ -319,7 +336,8 @@ get_recipe_with_least_ingredients_to_add<-function(
   best_combinations <- get_number_of_each_combinations(
     ingredients_to_use, 
     new_minimum_to_use,
-    must_include) %>% 
+    must_include
+  ) %>% 
     get_best_combinations() 
   
   while (length(best_combinations) == 0){
@@ -360,14 +378,15 @@ get_recipe_with_least_ingredients_to_add<-function(
 
 
 
-#' Give the list of all the recipes given by the three functions called
+#' Give the list of all the recipes given by the three functions called, depending on some criteria
 #'
-#' @param ingredients_to_use 
-#' @param proportion_of_recipe 
-#' @param minimum_ingredients_to_use 
-#' @param must_include 
+#' @param ingredients_to_use list of ingredients to use (in our fridge for example)
+#' @param proportion_of_recipe proportion of the recipe covered by the subset of the ingredients
+#' @param minimum_ingredients_to_use minimum number of ingredients to really use within the ingredients_to_use 
+#' @param must_include ingredients to be included
 #'
 #' @export
+#' @return list of recipes
 #'
 get_best_recipes<-function(
   ingredients_to_use, 
@@ -376,25 +395,27 @@ get_best_recipes<-function(
   must_include = NULL
 ) {
   
-  recipe_of_the_chef<-get_best_recipes_du_chef(
+  recipe_of_the_chef <- get_best_recipes_du_chef(
     ingredients_to_use, 
     proportion_of_recipe, 
     minimum_ingredients_to_use, 
-    must_include)
+    must_include
+  )
   
-  recipe_using_most_ingedrient<-get_best_recipe_using_most_ingredients(
+  recipe_using_most_ingredients <- get_best_recipe_using_most_ingredients(
     ingredients_to_use, 
-    must_include)
+    must_include
+  )
   
-  recipe_adding_least_ingredients<-get_recipe_with_least_ingredients_to_add(
+  recipe_adding_least_ingredients <- get_recipe_with_least_ingredients_to_add(
     ingredients_to_use, 
     minimum_ingredients_to_use, 
-    must_include)
+    must_include
+  )
   
-  
-  my_list<-list(recipe_of_the_chef=recipe_of_the_chef,
-                recipe_using_most_ingedrient=recipe_using_most_ingedrient,
-                recipe_adding_least_ingredients=recipe_adding_least_ingredients)
-  
-  my_list
+  list(
+    recipe_of_the_chef = recipe_of_the_chef,
+    recipe_using_most_ingedrient = recipe_using_most_ingredients,
+    recipe_adding_least_ingredients = recipe_adding_least_ingredients
+  )
 }
