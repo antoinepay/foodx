@@ -67,8 +67,8 @@ split_column_words_to_new_col <- function(df, column_name, words_column_name) {
 #' 
 #' @param df food dataframe
 #' @param ingredient_vector ingredient list
-#' @param list_column 
-#' @param matches_column 
+#' @param list_column name of the column to split into matches column
+#' @param matches_column column with the matched ingredient corresponding to the product
 #'
 #' @return data.frame
 #' @export
@@ -83,7 +83,7 @@ match_list_column_to_ingredients <- function(df, ingredient_vector, list_column,
 #'
 #' @import dplyr
 #' @importFrom purrr pmap reduce map
-#' @param df 
+#' @param df food dataframe from OpenFoodFacts
 #' @param ... matches column names
 #' 
 #'

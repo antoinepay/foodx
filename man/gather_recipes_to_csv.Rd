@@ -2,7 +2,7 @@
 % Please edit documentation in R/marmitoncrawler.R
 \name{gather_recipes_to_csv}
 \alias{gather_recipes_to_csv}
-\title{Title}
+\title{Write the recies data into a csv file}
 \usage{
 gather_recipes_to_csv(df)
 }
@@ -13,5 +13,5 @@ gather_recipes_to_csv(df)
 character
 }
 \description{
-Title
+Write the recies data into a csv file
 }

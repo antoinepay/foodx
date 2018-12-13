@@ -13,9 +13,9 @@ match_list_column_to_ingredients(df, ingredient_vector, list_column,
 
 \item{ingredient_vector}{ingredient list}
 
-\item{list_column}{}
+\item{list_column}{name of the column to split into matches column}
 
-\item{matches_column}{}
+\item{matches_column}{column with the matched ingredient corresponding to the product}
 }
 \value{
 data.frame

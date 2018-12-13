@@ -66,7 +66,7 @@ get_top_100_links  <- function() {
     map(function(node) { html_attr(node, 'href') })
 }
 
-#' Title
+#' Write the recies data into a csv file
 #'
 #' @param df data.frame
 #'

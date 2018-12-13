@@ -2,16 +2,16 @@
 % Please edit documentation in R/recipe_sorting.R
 \name{sort_budget}
 \alias{sort_budget}
-\title{Cheapest recipes}
+\title{Rank by Cheapest recipes}
 \usage{
 sort_budget(recipes)
 }
 \arguments{
-\item{recipes}{tibble of recipes}
+\item{recipes}{output tibble of recipes in the shiny app}
 }
 \value{
-tibble of recipes sorted according to the budget
+tibble of recipes sorted according to their cost
 }
 \description{
-Cheapest recipes
+Rank by Cheapest recipes
 }

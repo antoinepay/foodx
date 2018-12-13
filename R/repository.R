@@ -74,11 +74,11 @@ filter_categories <- function(food_dataset) {
       )
 }
 
-#' Split and get the last one 
+#' Split categories and get the last item listed 
 #'
-#' @param categories character with many categories separated by comma
+#' @param categories character with multiple categories separated by a comma
 #'
-#' @return category
+#' @return category with a single element
 #'
 get_last_category <- function(categories) {
   c <- strsplit(categories, ",")[[1]]

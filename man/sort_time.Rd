@@ -2,16 +2,16 @@
 % Please edit documentation in R/recipe_sorting.R
 \name{sort_time}
 \alias{sort_time}
-\title{Quickest recipes}
+\title{Rank by Quickest recipes}
 \usage{
 sort_time(recipes)
 }
 \arguments{
-\item{recipes}{tibble of recipes}
+\item{recipes}{output tibble of recipes in the shiny app}
 }
 \value{
-tibble of recipes sorted according to the total time
+tibble of recipes sorted according to the total time required for the recipe
 }
 \description{
-Quickest recipes
+Rank by Quickest recipes
 }
