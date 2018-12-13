@@ -24,7 +24,7 @@ ingredients_list <- function(){
 
 product_names <- function(){
   
-  dat <- data(food_w_match_clean)
+  data(food_w_match_clean)
   
   p <- dat %>% dplyr::select(product_name) %>% as.vector()
   
@@ -35,7 +35,7 @@ product_names <- function(){
 
 
 #' List all the ingredients from the Marmiton recipe dataset
-#' @return list
+#' @return vector
 #'
 #' @import dplyr
 #' @param scanned_list list of products from from database
@@ -44,6 +44,7 @@ product_names <- function(){
 #' @export
 
 convert_to_ingredient_list <- function(scanned_list){
+  
   l <- food_w_match_clean %>% 
     filter(product_name %in% scanned_list) %>% 
     select(qwe)
