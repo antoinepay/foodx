@@ -9,7 +9,7 @@
 #' @return html tag
 #' @export
 #'
-function_div <- function(URL, recipeTitle, pic_URL, recipeDifficulty, recipeCost, recipePreparationTime, recipeCookingTime) {
+function_div <- function(URL, recipeTitle, pic_URL, recipeDifficulty, recipeCost, recipePreparationTime, recipeCookingTime, health_index) {
   as.character(tags$div(class = "recipe", checked = NA,
                         tags$h4(tags$a(href = URL, recipeTitle)), 
                         tags$table(tags$tr(
@@ -17,8 +17,9 @@ function_div <- function(URL, recipeTitle, pic_URL, recipeDifficulty, recipeCost
                           tags$td(tags$ul(
                             tags$li(tags$p(glue("Difficult\u00E9 : {recipeDifficulty}"))), 
                             tags$li(tags$p(glue("Prix : {recipeCost}"))),
-                            tags$li(tags$p(glue("Temps de préparation : {recipePreparationTime} minutes"))), 
-                            tags$li(tags$p(glue("Temps de cuisson : {recipeCookingTime} minutes")))))
+                            tags$li(tags$p(glue("Temps de pr\u00E9paration : {recipePreparationTime} minutes"))), 
+                            tags$li(tags$p(glue("Temps de cuisson : {recipeCookingTime} minutes"))),
+                            tags$li(tags$p(glue("Healthy ? {health_index}")))))
                         )
                         )
   )
@@ -34,7 +35,7 @@ function_div <- function(URL, recipeTitle, pic_URL, recipeDifficulty, recipeCost
 #'
 recipe_output <- function(tibble){
   vec <- tibble %>% 
-    select(c(URL, recipeTitle, pic_URL, recipeDifficulty, recipeCost, recipePreparationTime, recipeCookingTime)) %>%
+    select(c(URL, recipeTitle, pic_URL, recipeDifficulty, recipeCost, recipePreparationTime, recipeCookingTime, health_index)) %>%
     mutate (recipeDifficulty = ifelse(recipeDifficulty == "tresfacile", "tr\u00E8s facile", recipeDifficulty)) %>% 
     mutate(recipeCost = ifelse(recipeCost == "bonmarche", "bon march\u00E9", recipeCost)) %>% 
     pmap(function_div)

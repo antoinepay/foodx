@@ -2,6 +2,7 @@
 
 export(app_server)
 export(app_ui)
+export(category_health)
 export(concat_matches)
 export(convert_to_ingredient_list)
 export(fetch_data_from_openfoodfacts)

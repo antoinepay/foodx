@@ -5,7 +5,7 @@
 \title{Recipes output in HTML for the Shiny App}
 \usage{
 function_div(URL, recipeTitle, pic_URL, recipeDifficulty, recipeCost,
-  recipePreparationTime, recipeCookingTime)
+  recipePreparationTime, recipeCookingTime, health_index)
 }
 \arguments{
 \item{URL}{}
