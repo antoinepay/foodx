@@ -38,8 +38,9 @@ split_columns_to_match <- function(df) {
 
 #' Create a dataframe that splits up the words of column_name to words_column_name
 #'
-#' @param df 
-#' @param col 
+#' @param df  df to apply the split on
+#' @param column_name column to split
+#' @param words_column_name  name of new column
 #' 
 #' @import dplyr
 #' @importFrom purrr map keep
@@ -63,8 +64,11 @@ split_column_words_to_new_col <- function(df, column_name, words_column_name) {
 #'
 #' @import dplyr
 #' @importFrom purrr map
-#' @param df 
-#' @param ingredient_vector 
+#' 
+#' @param df food dataframe
+#' @param ingredient_vector ingredient list
+#' @param list_column 
+#' @param matches_column 
 #'
 #' @return data.frame
 #' @export
