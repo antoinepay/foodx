@@ -7,10 +7,10 @@
 convert_to_ingredient_list(scanned_list)
 }
 \arguments{
-\item{scanned_list}{list of products from from database}
+\item{scanned_list}{list of products from database}
 }
 \value{
-list
+vector
 }
 \description{
 List all the ingredients from the Marmiton recipe dataset
