@@ -65,10 +65,10 @@ score_column <- function(marmiton_recipes){
 #' @export
 
 category_health <- function(marmiton_recipes){
-  marmiton_recipes <-  marmiton_recipes %>% mutate(health_index = ifelse(scores<=5, "Surtout Pas",
-                                                                         ifelse(scores<=10 & scores>5, "Bof Bof",
-                                                                                ifelse(scores<=15 & scores>10, "Ca Passe", 
-                                                                                       ifelse(scores>15,"Fonce Alphonse","")))))
+  marmiton_recipes <-  marmiton_recipes %>% mutate(health_index = ifelse(scores<=5, "Fonce Alphonse" ,
+                                                                         ifelse(scores<=10 & scores>5, "Ca Passe" ,
+                                                                                ifelse(scores<=15 & scores>10, "Bof Bof" , 
+                                                                                       ifelse(scores>15, "Surtout Pas" ,"")))))
   return(marmiton_recipes)
   }
 
