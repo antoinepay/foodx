@@ -1,3 +1,5 @@
+^Meta$
+^doc$
 ^raw-data/food_with_matches\.csv$
 ^raw-data/food\.csv$
 ^raw-data/recipe_data\.csv$

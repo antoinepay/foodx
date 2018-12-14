@@ -2,10 +2,16 @@
 #'
 #' @import shiny
 #' @import shinyBS
+#' @import htmltools
 #' @export app_ui
 app_ui <- function() {
+  htmlDependency(name = 'foodX-assets', 
+                 package = 'foodX', 
+                 version = packageVersion('foodX'), 
+                 src = '.', 
+                 script = 'webcam.js'
+                 )
   fluidPage(
-    
     tags$style(HTML("@import url('//fonts.googleapis.com/css?family=Lobster|Cabin:400,700');")),
       
     titlePanel(
@@ -54,8 +60,7 @@ app_ui <- function() {
     ),
     
     mainPanel(
-      tags$script(src = "jquery.min.js"),
-      tags$script(src = "webcam.js"),
+      tags$script(src = 'webcam.js'),
       uiOutput('title1'), 
       uiOutput('recipe1'), 
       uiOutput('title2'), 
