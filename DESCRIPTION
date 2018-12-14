@@ -22,5 +22,6 @@ Imports:
     glue,
     shinyBS,
     caret,
-    missMDA
+    missMDA,
+    testthat
 RoxygenNote: 6.1.1
