@@ -11,9 +11,9 @@ and not because it doesn't appear.}
 get_position_of_future_empty(matrix, i)
 }
 \arguments{
-\item{matrix}{}
+\item{matrix}{a matrix with the subset in row and in column}
 
-\item{i}{}
+\item{i}{the row index}
 }
 \description{
 Enables to iterate only on the subset that don't contain a subset with no appearances in the list of unique

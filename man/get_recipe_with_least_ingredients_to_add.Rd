@@ -9,11 +9,11 @@ get_recipe_with_least_ingredients_to_add(ingredients_to_use,
   minimum_ingredients_to_use, must_include)
 }
 \arguments{
-\item{ingredients_to_use}{}
+\item{ingredients_to_use}{in the recipe}
 
-\item{minimum_ingredients_to_use}{}
+\item{minimum_ingredients_to_use}{in the recipe}
 
-\item{must_include}{}
+\item{must_include}{ingredient in the recipe}
 }
 \value{
 list of recipes

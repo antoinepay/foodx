@@ -7,11 +7,11 @@
 get_number_of_each_combinations(set, minimum_to_use, must_include = NULL)
 }
 \arguments{
-\item{set}{}
+\item{set}{the set of ingredient you have}
 
-\item{minimum_to_use}{}
+\item{minimum_to_use}{in the recipe}
 
-\item{must_include}{}
+\item{must_include}{ingredient}
 }
 \description{
 Give the number of appearances of each subset in the list of unique

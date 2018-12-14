@@ -8,15 +8,21 @@ function_div(URL, recipeTitle, pic_URL, recipeDifficulty, recipeCost,
   recipePreparationTime, recipeCookingTime, health_index)
 }
 \arguments{
-\item{URL}{}
+\item{URL}{url to be put in href}
 
-\item{recipeTitle}{}
+\item{recipeTitle}{title to be put in <a>}
 
-\item{recipeDifficulty}{}
+\item{pic_URL}{URL of the recipe's image}
 
-\item{recipePreparationTime}{}
+\item{recipeDifficulty}{difficulty of the recipe}
 
-\item{recipeCookingTime}{}
+\item{recipeCost}{cost of the whole recipe}
+
+\item{recipePreparationTime}{preparation time for the recipe}
+
+\item{recipeCookingTime}{cooking time for the recipe}
+
+\item{health_index}{Healthiness of the recipe}
 }
 \value{
 html tag
