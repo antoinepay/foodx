@@ -1,0 +1,29 @@
+---
+title: "Vignette Title"
+author: "Vignette Author"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+We used two main sources of data: the food product dataset from openfoodfacts.org and recipe data scraped from marmiton.org. 
+
+Open Food Facts is an free, open-source database of food products, containing a wide variety of information concerning brand, packaging, origin, nutritional info, etc. After performing an exploratory data analysis on the full dataset, the dataset was first filtered to only products with the country label France. As a large majority of the nutritional information data, even macronutrients, is missing from the dataset, we performed MIPCA to estimate a final nutritional score.
+
+Marmiton is a French website with over 70,000 recipes created by thousands of community contributors. We created a dataset of recipes by scraping the website: first we gathered ~1500 URLs to recipe pages by calling the website’s randomize functionality, which generates a random recipe URL and opens it. We then used the URLs to call specific webpages, from which we scraped information about the recipe name, ingredients, cook and prep times, cost, occasion, etc. For each recipe we also scraped one URL of a photo from the recipe page. We then parsed and collected all generic ingredient names listed in recipes. 
+
+The generic ingredients were matched to product names based on common word(s), and for each product name zero, one or more generic ingredient matches were appended to the food products list. 
+
+To assign a nutrition score and health index to a recipe, and average health score was first calculated for each generic ingredient in the recipe, and then a global average across the ingredients listed in the recipe. The health index was assigned for the corresponding score value.
+
+Try `run_app()` to launch our app !

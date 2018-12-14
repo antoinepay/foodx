@@ -1,3 +1,4 @@
+inst/doc
 .Rproj.user
 .Rhistory
 .RData
@@ -5,4 +6,3 @@
 *.csv
 devstuffs.R
 devstuffs.Rmd
-devstuffs.R
