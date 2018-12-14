@@ -29,17 +29,19 @@ app_server <- function(input, output, session) {
     
     generic_ingredients <- union(input$Ingredients, barcodes_ingredients)
     
+    minimum_ingredients_to_use <- as.numeric(input$minimum_to_use)
+    
     if (input$filters == "Aucun"){
-      tibble <- get_best_recipes(generic_ingredients, minimum_ingredients_to_use = input$minimum_to_use, must_include = input$principal_ingredients)$recipe_of_the_chef
+      tibble <- get_best_recipes(generic_ingredients, minimum_ingredients_to_use = minimum_ingredients_to_use, must_include = input$principal_ingredients)$recipe_of_the_chef
     }
     else if (input$filters == "Le plus rapide"){
-    tibble <- get_best_recipes(generic_ingredients, minimum_ingredients_to_use = input$minimum_to_use, must_include = input$principal_ingredients)$recipe_of_the_chef %>% sort_time()
+    tibble <- get_best_recipes(generic_ingredients, minimum_ingredients_to_use = minimum_ingredients_to_use, must_include = input$principal_ingredients)$recipe_of_the_chef %>% sort_time()
     }
     else if (input$filters == "Le moins cher"){
-    tibble <- get_best_recipes(generic_ingredients, minimum_ingredients_to_use = input$minimum_to_use, must_include = input$principal_ingredients)$recipe_of_the_chef %>% sort_budget()
+    tibble <- get_best_recipes(generic_ingredients, minimum_ingredients_to_use = minimum_ingredients_to_use, must_include = input$principal_ingredients)$recipe_of_the_chef %>% sort_budget()
     } 
     else if (input$filters == "Le plus facile"){
-      tibble <- get_best_recipes(generic_ingredients, minimum_ingredients_to_use = input$minimum_to_use, must_include = input$principal_ingredients)$recipe_of_the_chef %>% sort_difficulty()
+      tibble <- get_best_recipes(generic_ingredients, minimum_ingredients_to_use = minimum_ingredients_to_use, must_include = input$principal_ingredients)$recipe_of_the_chef %>% sort_difficulty()
     } 
    if (nrow(tibble) == 0){
      print("D\u00E9sol\u00E9, aucune recette ne correspond \u00E0 votre demande dans cette cat\u00E9gorie")
@@ -58,25 +60,29 @@ app_server <- function(input, output, session) {
     
     generic_ingredients <- union(input$Ingredients, barcodes_ingredients)
     
+    minimum_ingredients_to_use <- as.numeric(input$minimum_to_use)
+    
     if (input$filters == "Aucun"){
-      tibble <- get_best_recipes(generic_ingredients, minimum_ingredients_to_use = input$minimum_to_use, must_include = input$principal_ingredients)$recipe_using_most_ingedrient
+      tibble <- get_best_recipes(generic_ingredients, minimum_ingredients_to_use = minimum_ingredients_to_use, must_include = input$principal_ingredients)$recipe_using_most_ingedrient
     }
     else if (input$filters == "Le plus rapide"){
-      tibble <- get_best_recipes(generic_ingredients, minimum_ingredients_to_use = input$minimum_to_use, must_include = input$principal_ingredients)$recipe_using_most_ingedrient %>% 
+      tibble <- get_best_recipes(generic_ingredients, minimum_ingredients_to_use = minimum_ingredients_to_use, must_include = input$principal_ingredients)$recipe_using_most_ingedrient %>% 
         sort_time()
     }
     else if (input$filters == "Le moins cher"){
-      tibble <- get_best_recipes(generic_ingredients, minimum_ingredients_to_use = input$minimum_to_use, must_include = input$principal_ingredients)$recipe_using_most_ingedrient %>% 
+      tibble <- get_best_recipes(generic_ingredients, minimum_ingredients_to_use = minimum_ingredients_to_use, must_include = input$principal_ingredients)$recipe_using_most_ingedrient %>% 
         sort_budget()
     } 
     else if (input$filters == "Le plus facile"){
-      tibble <- get_best_recipes(generic_ingredients, minimum_ingredients_to_use = input$minimum_to_use, must_include = input$principal_ingredients)$recipe_using_most_ingedrient %>% 
+      tibble <- get_best_recipes(generic_ingredients, minimum_ingredients_to_use = minimum_ingredients_to_use, must_include = input$principal_ingredients)$recipe_using_most_ingedrient %>% 
         sort_difficulty()
     } 
+    
     if (nrow(tibble) == 0){
       print("D\u00E9sol\u00E9, aucune recette ne correspond \u00E0 votre demande dans cette cat\u00E9gorie")
+    } else {
+      recipe_output(tibble)
     }
-    else {recipe_output(tibble)}
   }, ignoreInit = TRUE)
   
   second_msg <- eventReactive(input$button, {as.character(tags$div(class = "header", checked = NA, tags$hr(), tags$h2("Recettes avec le plus de vos ingr\u00E9dients")))})
@@ -90,17 +96,19 @@ app_server <- function(input, output, session) {
     
     generic_ingredients <- union(input$Ingredients, barcodes_ingredients)
     
+    minimum_ingredients_to_use <- as.numeric(input$minimum_to_use)
+    
     if (input$filters == "Aucun"){
-      tibble <- get_best_recipes(generic_ingredients, minimum_ingredients_to_use = input$minimum_to_use, must_include = input$principal_ingredients)$recipe_adding_least_ingredients
+      tibble <- get_best_recipes(generic_ingredients, minimum_ingredients_to_use = minimum_ingredients_to_use, must_include = input$principal_ingredients)$recipe_adding_least_ingredients
     }
     else if (input$filters == "Le plus rapide"){
-      tibble <- get_best_recipes(generic_ingredients, minimum_ingredients_to_use = input$minimum_to_use, must_include = input$principal_ingredients)$recipe_adding_least_ingredients %>% sort_time()
+      tibble <- get_best_recipes(generic_ingredients, minimum_ingredients_to_use = minimum_ingredients_to_use, must_include = input$principal_ingredients)$recipe_adding_least_ingredients %>% sort_time()
     }
     else if (input$filters == "Le moins cher"){
-      tibble <- get_best_recipes(generic_ingredients, minimum_ingredients_to_use = input$minimum_to_use, must_include = input$principal_ingredients)$recipe_adding_least_ingredients %>% sort_budget()
+      tibble <- get_best_recipes(generic_ingredients, minimum_ingredients_to_use = minimum_ingredients_to_use, must_include = input$principal_ingredients)$recipe_adding_least_ingredients %>% sort_budget()
     } 
     else if (input$filters == "Le plus facile"){
-      tibble <- get_best_recipes(generic_ingredients, minimum_ingredients_to_use = input$minimum_to_use, must_include = input$principal_ingredients)$recipe_adding_least_ingredients %>% sort_difficulty()
+      tibble <- get_best_recipes(generic_ingredients, minimum_ingredients_to_use = minimum_ingredients_to_use, must_include = input$principal_ingredients)$recipe_adding_least_ingredients %>% sort_difficulty()
     } 
     if (nrow(tibble) == 0){
       print("D\u00E9sol\u00E9, aucune recette ne correspond \u00E0 votre demande dans cette cat\u00E9gorie")

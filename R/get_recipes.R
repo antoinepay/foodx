@@ -13,30 +13,22 @@ remove_ingredients_you_always_have <- function(list){
 #'
 #' @param x a string of character
 #'
-#' @return
+#' @return string without dashes but spaces
 #' @export
 #'
-#' @examples
-remove_tiret<-function(x){
-  x<-gsub("-"," ",x)
-  x
+#' @examples remove_dash('abc-def')
+remove_dash <- function(x){
+  gsub("-"," ",x)
 }
 
-
-#' a list of list of character
+#' Remove all dashes from marmiton_recipe_ingredients dataframe
 #'
-#' @param list with all the recipes 
-#'
-#' @return
+#' @return marmiton recipes without dashes
 #' @export
 #'
-#' @examples
-remove_tiret_for_marmiton<-function(){
-  marmiton_recipes_ingredients<-lapply(marmiton_recipes_ingredients, remove_tiret)
-  marmiton_recipes_ingredients
+remove_dashes_for_marmiton<-function() {
+  lapply(marmiton_recipes_ingredients, remove_dash)
 }
-
-marmiton_recipes_ingredients<-remove_tiret_for_marmiton()
 
 #' Quick way to obtain all the subsets given a set
 #'
@@ -272,7 +264,7 @@ get_best_recipes_du_chef <- function(
       get_nb_best_combinations(proportion_of_recipe),silent = T)
   
   
-  while (length(best_combinations$ingredients) ==0){
+  while (length(best_combinations$ingredients) == 0){
     
     new_minimum_to_use<-new_minimum_to_use-1
     
@@ -292,12 +284,13 @@ get_best_recipes_du_chef <- function(
     })
   
   if (new_minimum_to_use!=minimum_ingredients_to_use){
-    print(glue("Sorry , we could not use {minimum_ingredients_to_use+1} ingredients, 
-                     used {new_minimum_to_use} instead for the recipe of the chef"))
+    glue("Sorry , we could not use {minimum_ingredients_to_use+1} ingredients,
+         used {new_minimum_to_use} instead for the recipe of the chef")
   }
   
   if (dim(marmiton_recipes[indexes,])[1]==0) {
-    print(glue("Sorry the Chef has nothing for you to cover {proportion_of_recipe}% of the recipe"))}
+    glue("Sorry the Chef has nothing for you to cover {proportion_of_recipe}% of the recipe")
+  }
   
   marmiton_recipes[indexes,]
   
@@ -355,11 +348,11 @@ get_best_recipe_using_most_ingredients <- function(
 #' @return list of recipes
 #' @export
 #'
-get_recipe_with_least_ingredients_to_add<-function(
+get_recipe_with_least_ingredients_to_add <- function(
   ingredients_to_use, 
   minimum_ingredients_to_use, 
   must_include
-){
+) {
   
   new_minimum_to_use<-minimum_ingredients_to_use
   
@@ -398,9 +391,9 @@ get_recipe_with_least_ingredients_to_add<-function(
       is_contained(best_combination, ingredients,v)
     })
   
-  if (new_minimum_to_use!=minimum_ingredients_to_use){
-    print(glue("Sorry, we could not use {minimum_ingredients_to_use+1} ingredients, 
-                     used {new_minimum_to_use+1} instead for the third type receipe"))
+  if (new_minimum_to_use != minimum_ingredients_to_use){
+    glue("Sorry, we could not use {minimum_ingredients_to_use+1} ingredients, 
+         used {new_minimum_to_use+1} instead for the third type receipe")
   }
   
   marmiton_recipes[indexes,]
