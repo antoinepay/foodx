@@ -29,7 +29,7 @@ function get_barcode(blob) {
   data = new FormData();
   data.append('image', blob);
   var request = new XMLHttpRequest();
-  request.open("POST", "http://127.0.0.1:5000/decode");
+  request.open("POST", "http://helmee.fr/decode");
   request.send(data);
   request.onreadystatechange = function () {
 

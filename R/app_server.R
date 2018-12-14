@@ -44,9 +44,10 @@ app_server <- function(input, output, session) {
       tibble <- get_best_recipes(generic_ingredients, minimum_ingredients_to_use = minimum_ingredients_to_use, must_include = input$principal_ingredients)$recipe_of_the_chef %>% sort_difficulty()
     } 
    if (nrow(tibble) == 0){
-     print("D\u00E9sol\u00E9, aucune recette ne correspond \u00E0 votre demande dans cette cat\u00E9gorie")
-   }
-    else {recipe_output(tibble)}
+     return("D\u00E9sol\u00E9, aucune recette ne correspond \u00E0 votre demande dans cette cat\u00E9gorie")
+    } else {
+      recipe_output(tibble)
+    }
   }, ignoreInit = TRUE)
   
   first_msg <- eventReactive(input$button, {as.character(tags$div(class = "header", checked = NA, tags$hr(), tags$h2("Recettes du chef")))})
@@ -79,7 +80,7 @@ app_server <- function(input, output, session) {
     } 
     
     if (nrow(tibble) == 0){
-      print("D\u00E9sol\u00E9, aucune recette ne correspond \u00E0 votre demande dans cette cat\u00E9gorie")
+      return("D\u00E9sol\u00E9, aucune recette ne correspond \u00E0 votre demande dans cette cat\u00E9gorie")
     } else {
       recipe_output(tibble)
     }
@@ -111,7 +112,7 @@ app_server <- function(input, output, session) {
       tibble <- get_best_recipes(generic_ingredients, minimum_ingredients_to_use = minimum_ingredients_to_use, must_include = input$principal_ingredients)$recipe_adding_least_ingredients %>% sort_difficulty()
     } 
     if (nrow(tibble) == 0){
-      print("D\u00E9sol\u00E9, aucune recette ne correspond \u00E0 votre demande dans cette cat\u00E9gorie")
+      return("D\u00E9sol\u00E9, aucune recette ne correspond \u00E0 votre demande dans cette cat\u00E9gorie")
     }
     else {recipe_output(tibble)}
   }, ignoreInit = TRUE)
