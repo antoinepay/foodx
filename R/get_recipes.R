@@ -263,7 +263,6 @@ get_best_recipes_du_chef <- function(
       get_best_combinations() %>% 
       get_nb_best_combinations(proportion_of_recipe),silent = T)
   
-  
   while (length(best_combinations$ingredients) == 0){
     
     new_minimum_to_use<-new_minimum_to_use-1
@@ -415,8 +414,12 @@ get_best_recipes<-function(
   ingredients_to_use, 
   proportion_of_recipe = 30, 
   minimum_ingredients_to_use = 0, 
-  must_include = NULL)
-  {
+  must_include = NULL
+) {
+  
+  if (length(ingredients_to_use) == 0) {
+    return(list())
+  }
   
   recipe_of_the_chef <- get_best_recipes_du_chef(
     ingredients_to_use, 

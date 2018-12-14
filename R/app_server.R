@@ -23,7 +23,7 @@ app_server <- function(input, output, session) {
   first_recipe <- eventReactive(input$button, {
     
     barcodes_ingredients <- union(
-      convert_to_ingredient_list(strsplit(input$barcodes_input, split = ' ')), 
+      convert_to_ingredient_list(strsplit(input$barcodes_input, split = ' ')[[1]]), 
       convert_to_ingredient_list(input$barcodes)
     )
     
@@ -43,7 +43,7 @@ app_server <- function(input, output, session) {
     else if (input$filters == "Le plus facile"){
       tibble <- get_best_recipes(generic_ingredients, minimum_ingredients_to_use = minimum_ingredients_to_use, must_include = input$principal_ingredients)$recipe_of_the_chef %>% sort_difficulty()
     } 
-   if (nrow(tibble) == 0){
+    if (is.null(tibble) || nrow(tibble) == 0){
      return("D\u00E9sol\u00E9, aucune recette ne correspond \u00E0 votre demande dans cette cat\u00E9gorie")
     } else {
       recipe_output(tibble)
@@ -55,7 +55,7 @@ app_server <- function(input, output, session) {
   second_recipe <- eventReactive(input$button, {
     
     barcodes_ingredients <- union(
-      convert_to_ingredient_list(strsplit(input$barcodes_input, split = ' ')), 
+      convert_to_ingredient_list(strsplit(input$barcodes_input, split = ' ')[[1]]), 
       convert_to_ingredient_list(input$barcodes)
     )
     
@@ -79,7 +79,7 @@ app_server <- function(input, output, session) {
         sort_difficulty()
     } 
     
-    if (nrow(tibble) == 0){
+    if (is.null(tibble) || nrow(tibble) == 0){
       return("D\u00E9sol\u00E9, aucune recette ne correspond \u00E0 votre demande dans cette cat\u00E9gorie")
     } else {
       recipe_output(tibble)
@@ -91,7 +91,7 @@ app_server <- function(input, output, session) {
   third_recipe <- eventReactive(input$button, {
    
     barcodes_ingredients <- union(
-      convert_to_ingredient_list(strsplit(input$barcodes_input, split = ' ')), 
+      convert_to_ingredient_list(strsplit(input$barcodes_input, split = ' ')[[1]]), 
       convert_to_ingredient_list(input$barcodes)
     )
     
@@ -111,7 +111,7 @@ app_server <- function(input, output, session) {
     else if (input$filters == "Le plus facile"){
       tibble <- get_best_recipes(generic_ingredients, minimum_ingredients_to_use = minimum_ingredients_to_use, must_include = input$principal_ingredients)$recipe_adding_least_ingredients %>% sort_difficulty()
     } 
-    if (nrow(tibble) == 0){
+    if (is.null(tibble) || nrow(tibble) == 0){
       return("D\u00E9sol\u00E9, aucune recette ne correspond \u00E0 votre demande dans cette cat\u00E9gorie")
     }
     else {recipe_output(tibble)}

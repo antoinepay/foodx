@@ -6,7 +6,7 @@
 #' @export
 
 nutrition_score <- function(ingredient){
-  df <- food_w_match_clean %>% filter(matches == ingredient) 
+  df <- food_w_match_clean %>% filter(qwe == ingredient) 
   avg <- mean(df$`nutrition-score-fr_100g`, na.rm = TRUE)
   return(avg)
 }

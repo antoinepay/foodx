@@ -25,7 +25,7 @@ test_that("expect = no error",{
   expect_is(recipe_output(recipes_test),"character")
   
   
-  expect_is(nutrition_score("fromage"),"numeric")
+  expect_is(nutrition_score("fromage"), 'numeric')
   
   expect_is(recipe_score(recipes_test[1,]),"numeric")
   

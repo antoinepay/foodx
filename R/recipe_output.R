@@ -29,11 +29,11 @@ function_div <- function(
                         tags$table(tags$tr(
                           tags$td(tags$img(src = pic_URL, width = "150px", height = "150px", title = "Image de la recette", style = "border-radius:50%")),
                           tags$td(tags$ul(
-                            tags$li(tags$p(glue("<b>Difficult\u00E9</b> : {recipeDifficulty}"))), 
-                            tags$li(tags$p(glue("<b>Prix</b> : {recipeCost}"))),
-                            tags$li(tags$p(glue("<b>Temps de pr\u00E9paration</b> : {recipePreparationTime} minutes"))), 
-                            tags$li(tags$p(glue("<b>Temps de cuisson</b> : {recipeCookingTime} minutes"))),
-                            tags$li(tags$p(glue("<b>Healthy</b> ? {health_index}")))))
+                            tags$li(tags$p(glue("Difficult\u00E9 : {recipeDifficulty}"))), 
+                            tags$li(tags$p(glue("Prix : {recipeCost}"))),
+                            tags$li(tags$p(glue("Temps de pr\u00E9paration : {recipePreparationTime} minutes"))), 
+                            tags$li(tags$p(glue("Temps de cuisson : {recipeCookingTime} minutes"))),
+                            tags$li(tags$p(glue("Healthy ? {health_index}")))))
                           )
                         )
                       )
