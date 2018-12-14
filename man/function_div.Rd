@@ -30,3 +30,7 @@ html tag
 \description{
 Recipes output in HTML for the Shiny App
 }
+\examples{
+function_div('url', 'title', 'picture_url', 'difficulty', 'cost', 'time_p', 'time_c', 'health')
+
+}

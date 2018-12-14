@@ -7,7 +7,7 @@
 recipe_output(tibble)
 }
 \arguments{
-\item{tibble}{}
+\item{tibble}{recipes to be transformed in html}
 }
 \value{
 html tag

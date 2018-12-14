@@ -11,6 +11,8 @@
 #'
 #' @return html tag
 #' @export
+#' 
+#' @examples function_div('url', 'title', 'picture_url', 'difficulty', 'cost', 'time_p', 'time_c', 'health')
 #'
 function_div <- function(
   URL, 
@@ -40,7 +42,7 @@ function_div <- function(
 
 #' Get a list of html tags, iterated over an entire dataframe
 #'
-#' @param tibble 
+#' @param tibble recipes to be transformed in html
 #'
 #' @return html tag
 #' @export
