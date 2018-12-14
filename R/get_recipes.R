@@ -9,6 +9,35 @@ remove_ingredients_you_always_have <- function(list){
   list[!(list %in% must_have_ingredients)]
 }
 
+#' Change dash to space
+#'
+#' @param x a string of character
+#'
+#' @return
+#' @export
+#'
+#' @examples
+remove_tiret<-function(x){
+  x<-gsub("-"," ",x)
+  x
+}
+
+
+#' a list of list of character
+#'
+#' @param list with all the recipes 
+#'
+#' @return
+#' @export
+#'
+#' @examples
+remove_tiret_for_marmiton<-function(){
+  marmiton_recipes_ingredients<-lapply(marmiton_recipes_ingredients, remove_tiret)
+  marmiton_recipes_ingredients
+}
+
+marmiton_recipes_ingredients<-remove_tiret_for_marmiton()
+
 #' Quick way to obtain all the subsets given a set
 #'
 #' @importFrom purrr map
@@ -62,8 +91,8 @@ is_contained <- function(v1, v2, percentage = 0) {
 #' @import dplyr
 #' @importFrom purrr map reduce
 #' 
-#' @param one_combination 
-#' @param percentage 
+#' @param one_combination one particular combination in all the subset
+#' @param percentage a percentage
 #'
 #' @export
 get_number_for_one_combination <- function(one_combination, percentage) {
@@ -77,7 +106,7 @@ get_number_for_one_combination <- function(one_combination, percentage) {
 
 #' Calcul matrix of containance between different sets: for a given set i, m[i,j]=1 if the set j contains the set i
 #'
-#' @param all.subset 
+#' @param all.subset all subsets of ingredients you have
 #'
 #' @return matrix of containance
 #' @export
@@ -96,7 +125,7 @@ get.matrix.subset.containance<-function(all.subset)
 
 #' Give all the subsets of the set according to the conditions wanted (minimum ingredient to use, must include ...)
 #'
-#' @param set 
+#' @param set the ingredient you have in your fridge
 #' @param minimum_to_use a minimum of ingredient you want to use
 #' @param must_include the ingredient that must be in the recipe
 #'
@@ -125,8 +154,8 @@ preprocess_set <- function(
 #' Yet having no appearances in that list can mean, that the percentage rule was not passed,
 #' and not because it doesn't appear.
 #'
-#' @param matrix 
-#' @param i 
+#' @param matrix a matrix with the subset in row and in column
+#' @param i the row index
 #'
 #' @export
 #'
@@ -146,9 +175,9 @@ get_position_of_future_empty<-function(matrix,i){
 #' Give the number of appearances of each subset in the list of unique
 #' 
 #'
-#' @param set 
-#' @param minimum_to_use 
-#' @param must_include 
+#' @param set the set of ingredient you have
+#' @param minimum_to_use in the recipe
+#' @param must_include ingredient 
 #'
 #' @export
 #'
@@ -319,9 +348,9 @@ get_best_recipe_using_most_ingredients <- function(
 #' 
 #' @importFrom glue glue
 #' @importFrom purrr map_lgl
-#' @param ingredients_to_use 
-#' @param minimum_ingredients_to_use 
-#' @param must_include 
+#' @param ingredients_to_use in the recipe
+#' @param minimum_ingredients_to_use in the recipe
+#' @param must_include ingredient in the recipe
 #'
 #' @return list of recipes
 #' @export
@@ -393,8 +422,8 @@ get_best_recipes<-function(
   ingredients_to_use, 
   proportion_of_recipe = 30, 
   minimum_ingredients_to_use = 0, 
-  must_include = NULL
-) {
+  must_include = NULL)
+  {
   
   recipe_of_the_chef <- get_best_recipes_du_chef(
     ingredients_to_use, 
@@ -414,9 +443,9 @@ get_best_recipes<-function(
     must_include
   )
   
-  list(
+  unique(list(
     recipe_of_the_chef = recipe_of_the_chef,
     recipe_using_most_ingedrient = recipe_using_most_ingredients,
     recipe_adding_least_ingredients = recipe_adding_least_ingredients
-  )
+  ))
 }
