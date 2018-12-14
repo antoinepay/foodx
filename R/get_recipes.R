@@ -443,9 +443,9 @@ get_best_recipes<-function(
     must_include
   )
   
-  unique(list(
+  list(
     recipe_of_the_chef = recipe_of_the_chef,
     recipe_using_most_ingedrient = recipe_using_most_ingredients,
     recipe_adding_least_ingredients = recipe_adding_least_ingredients
-  ))
+  )
 }
