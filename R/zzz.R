@@ -1,0 +1,33 @@
+globalVariables(
+  c(
+    'scores',
+    'qwe',
+    'product_name',
+    'countries_tags',
+    '.',
+    'output_filepath',
+    'categories',
+    'categories_tags',
+    'categories_fr',
+    'ingredient',
+    'recipeIngredients',
+    ':=',
+    'product_name_words',
+    'product_name_matches',
+    'categories_words',
+    'categories_matches',
+    'categories_fr_words',
+    'categories_fr_matches',
+    'unnest',
+    'URL',
+    'recipeTitle',
+    'pic_URL',
+    'recipeDifficulty',
+    'recipeCost',
+    'recipePreparationTime',
+    'recipeCookingTime',
+    'health_index',
+    'recipeIngredients',
+    'totalTime'
+  )
+)
