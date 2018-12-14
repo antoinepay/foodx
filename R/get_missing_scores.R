@@ -4,15 +4,15 @@
 #' second step is a linear regression trained on the dataset with the non missing nutrition score
 #' and used to predict the missing ones
 #'
-#' @importFrom caret
-#' @importFrom missMDA
+#' @importFrom caret createDataPartition
+#' @importFrom missMDA MIPCA
+#' @importFrom stats glm predict
 #'
 #'
 #'
 #' @return a dataframe with barcode and corresponding grades
 #' @export
 #'
-#' @examples
 generate_missing_scores<-function(){
   food<-read_csv("data/food_with_matches.csv")
   

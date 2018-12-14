@@ -20,5 +20,7 @@ Imports:
     tidytext,
     stringr,
     glue,
-    shinyBS
+    shinyBS,
+    caret,
+    missMDA
 RoxygenNote: 6.1.1

@@ -28,6 +28,14 @@ globalVariables(
     'recipeCookingTime',
     'health_index',
     'recipeIngredients',
-    'totalTime'
+    'totalTime',
+    'energy_100g',
+    'fiber_100g',
+    'sugars_100g',
+    'salt_100g',
+    'nutrition-score-fr_100g',
+    'glm',
+    'predict',
+    'new_grade'
   )
 )
