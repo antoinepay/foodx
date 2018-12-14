@@ -7,9 +7,9 @@
 get_number_for_one_combination(one_combination, percentage)
 }
 \arguments{
-\item{one_combination}{}
+\item{one_combination}{one particular combination in all the subset}
 
-\item{percentage}{}
+\item{percentage}{a percentage}
 }
 \description{
 Count the number of appearances of one combination of ingredients in the list of marmiton recipes

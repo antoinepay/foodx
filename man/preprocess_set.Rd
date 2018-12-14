@@ -7,7 +7,7 @@
 preprocess_set(set, minimum_to_use, must_include = NULL)
 }
 \arguments{
-\item{set}{}
+\item{set}{the ingredient you have in your fridge}
 
 \item{minimum_to_use}{a minimum of ingredient you want to use}
 

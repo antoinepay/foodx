@@ -7,7 +7,7 @@
 get.matrix.subset.containance(all.subset)
 }
 \arguments{
-\item{all.subset}{}
+\item{all.subset}{all subsets of ingredients you have}
 }
 \value{
 matrix of containance
