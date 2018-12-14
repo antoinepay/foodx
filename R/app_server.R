@@ -124,11 +124,11 @@ app_server <- function(input, output, session) {
   })
   
   observe({
-    updateSelectInput(session = session, inputId = "minimum_to_use", choices = 1:length(input$Ingredients))
+    updateSelectInput(session = session, inputId = "minimum_to_use", choices = 1:length(generic_ingredients))
   })
   
   observe({
-    updateSelectizeInput(session = session, inputId = "principal_ingredients", choices = input$Ingredients)
+    updateSelectizeInput(session = session, inputId = "principal_ingredients", choices = generic_ingredients)
   })
 
   output$title1 <- renderUI({
