@@ -13,10 +13,10 @@ remove_ingredients_you_always_have <- function(list){
 #'
 #' @param x a string of character
 #'
-#' @return
-#' @export
+#' @return list
+#' @export 
 #'
-#' @examples
+#' @examples remove_tiret(list)
 remove_tiret<-function(x){
   x<-gsub("-"," ",x)
   x
@@ -27,10 +27,10 @@ remove_tiret<-function(x){
 #'
 #' @param list with all the recipes 
 #'
-#' @return
+#' @return list
 #' @export
 #'
-#' @examples
+#' @examples remove_tiret_for_marmiton(list)
 remove_tiret_for_marmiton<-function(){
   marmiton_recipes_ingredients<-lapply(marmiton_recipes_ingredients, remove_tiret)
   marmiton_recipes_ingredients
